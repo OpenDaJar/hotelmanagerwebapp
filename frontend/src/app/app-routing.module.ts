@@ -4,6 +4,7 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 
 const routes: Routes = [
   { path: '', redirectTo: '/rooms', pathMatch: 'full' },
+
   {
     path: 'rooms',
     loadChildren: () =>
