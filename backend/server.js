@@ -5,7 +5,13 @@ const cookieSession = require("cookie-session");
 const app = express();
 
 
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:8081"],
+  })
+);
 
 
 // parse requests of content-type - application/json
@@ -25,11 +31,13 @@ app.use(
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
+//Drop table if force: true and uncommend following
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
 
+db.sequelize.sync().then(()=>console.log("Resync DB"));
 
 // simple route
 app.get("/", (req, res) => {
@@ -44,6 +52,8 @@ app.listen(PORT, () => {
 
 
 function initial() {
+
+  //create roles in DB
   Role.create({
     id: 1,
     name: "user"
