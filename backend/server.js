@@ -54,9 +54,14 @@ app.listen(PORT, () => {
 function initial() {
 
   //create roles in DB
+  // Role.create({
+  //   id: 1,
+  //   name: "user"
+  // });
+
   Role.create({
     id: 1,
-    name: "user"
+    name: "admin"
   });
  
   Role.create({
@@ -64,10 +69,7 @@ function initial() {
     name: "moderator"
   });
  
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
+
 }
 
 // routes
