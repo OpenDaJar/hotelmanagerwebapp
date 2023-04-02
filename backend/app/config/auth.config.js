@@ -1,4 +1,11 @@
 //for testing only...
 module.exports = {
-  secret: "testing-secret-key"
+  secret: "testing-secret-key",
+  //for deployed
+  // jwtExpiration: 3600,           // 1 hour
+  // jwtRefreshExpiration: 86400,   // 24 hours
+
+  /* for test */
+  jwtExpiration: 60,          // 1 minute
+  jwtRefreshExpiration: 120,  // 2 minutes
 };
