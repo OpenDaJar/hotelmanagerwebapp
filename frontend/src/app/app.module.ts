@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { HttpClientModule } from '@angular/common/http';
+import { httpInterceptorProviders } from './_helpers/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PagenotfoundComponent],
@@ -16,8 +18,9 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

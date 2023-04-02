@@ -1,1 +1,59 @@
-<p>register works!</p>
+{{registerForm.value | json}}
+<form [formGroup]="registerForm">
+  <mat-form-field class="form-field">
+    <mat-label>Username</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControlName]="'username'"
+      placeholder="Enter Username"
+    />
+    <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error> -->
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      [formControlName]="'email'"
+      placeholder="Enter Email"
+    />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-label>Password</mat-label>
+    <input
+      type="password"
+      matInput
+      [formControlName]="'password'"
+      placeholder="Enter Password"
+    />
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-label>Repeat Password</mat-label>
+    <input
+      type="password"
+      matInput
+      [formControlName]="'rePassword'"
+      placeholder="Password"
+    />
+  </mat-form-field>
+    <mat-label>Pick Role</mat-label>
+    <mat-radio-group
+      aria-labelledby="radio-group-label"
+      class="radio-group"
+      [formControlName]="'userRole'"
+    >
+      <mat-radio-button
+        class="radio-button"
+        *ngFor="let role of roles"
+        [value]="role"
+      >
+      {{role | titlecase}}
+      </mat-radio-button>
+    </mat-radio-group>
+</form>
