@@ -25,13 +25,14 @@ export class AuthService {
     );
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(username: string, email: string, password: string, roles:string): Observable<any> {
     return this.http.post(
       AUTH_API + 'signup',
       {
         username,
         email,
         password,
+        roles,
       },
       httpOptions
     );
@@ -39,5 +40,9 @@ export class AuthService {
 
   logout(): Observable<any> {
     return this.http.post(AUTH_API + 'signout', {}, httpOptions);
+  }
+
+  refreshToken() {
+    return this.http.post(AUTH_API + 'refreshtoken', { }, httpOptions);
   }
 }

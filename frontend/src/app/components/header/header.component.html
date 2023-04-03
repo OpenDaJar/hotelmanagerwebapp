@@ -56,11 +56,11 @@
     </div>
   </div>
   <div>
-    <button type="button" class="btn">
+    <button type="button" class="btn" *ngIf="!isLoggedIn">
       <a routerLink="/login">Login</a>
     </button>
 
-    <div class="btn-group" dropdown>
+    <div class="btn-group" dropdown *ngIf="isLoggedIn">
       <button
         id="button-basic"
         dropdownToggle
@@ -68,7 +68,7 @@
         class="btn dropdown-toggle"
         aria-controls="dropdown-basic"
       >
-        "Username"
+        {{username}}
       </button>
       <ul
         id="dropdown-basic"
@@ -84,7 +84,7 @@
           <a class="dropdown-item" routerLink="/profile">Profile</a>
         </li>
         <li role="menuitem">
-          <a class="dropdown-item">Logout</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>
