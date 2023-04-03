@@ -53,12 +53,6 @@ app.listen(PORT, () => {
 
 function initial() {
 
-  //create roles in DB
-  // Role.create({
-  //   id: 1,
-  //   name: "user"
-  // });
-
   Role.create({
     id: 1,
     name: "admin"
