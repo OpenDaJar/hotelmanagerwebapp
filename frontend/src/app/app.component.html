@@ -1,2 +1,2 @@
-<app-header></app-header>
+<app-header [username] = "username" [isLoggedIn]="isLoggedIn" (logOutEvent) = "logout($event)"></app-header>
 <router-outlet></router-outlet>
