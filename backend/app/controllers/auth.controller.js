@@ -45,6 +45,13 @@ exports.signin = async (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
 
+    const disabledAccount = user.isDisabled;
+
+    if(disabledAccount){
+      return res.status(401).send({message:"User account is Disabled"});
+    }
+   
+
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
       user.password
@@ -60,11 +67,10 @@ exports.signin = async (req, res) => {
       expiresIn: 86400, // 24 hours
     });
 
-    let authorities = [];
+
+    let authorities;
     const roles = await user.getRoles();
-    for (let i = 0; i < roles.length; i++) {
-      authorities.push("ROLE_" + roles[i].name.toUpperCase());
-    }
+    authorities = "ROLE_" + roles[0].name.toUpperCase();
 
     req.session.token = token;
 
@@ -73,6 +79,7 @@ exports.signin = async (req, res) => {
       username: user.username,
       email: user.email,
       roles: authorities,
+      isDisabled: user.isDisabled,
     });
   } catch (error) {
     return res.status(500).send({ message: error.message });
