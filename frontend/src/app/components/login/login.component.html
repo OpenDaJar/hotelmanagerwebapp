@@ -1,1 +1,47 @@
-<p>login works!</p>
+<div *ngIf="!isLoggedIn">
+  {{ loginForm.value | json }}
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field">
+      <mat-label>Username</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="username"
+        placeholder="Enter Username"
+      />
+      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        placeholder="Enter Password"
+      />
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button [disabled]="loginForm.invalid" mat-button color="primary">
+        Login
+      </button>
+    </div>
+    <div *ngIf="isLoginFailed" class="alert alert-danger" role="alert">
+      Login failed: {{ errorMessage }}
+    </div>
+  </form>
+</div>
+<div class="alert alert-success" *ngIf="isLoggedIn">
+  Logged in as {{ roles }}.
+</div>
