@@ -1,1 +1,73 @@
-<p>add-room works!</p>
+
+  {{ addRoomForm.value | json }}
+  <form [formGroup]="addRoomForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field">
+      <mat-label>Room Number</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="number"
+        placeholder="Enter Room Number"
+      />
+      <mat-error *ngIf="addRoomForm.get('number')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="addRoomForm.get('number')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Room Type</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="type"
+        placeholder="Enter Room Type"
+      />
+      <mat-error *ngIf="addRoomForm.get('type')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="addRoomForm.get('type')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+
+      <mat-label>Room Price</mat-label>
+
+      <input
+        type="number"
+        matInput
+        formControlName="price"
+        placeholder="Enter Room Price"
+      />
+      <mat-error *ngIf="addRoomForm.get('price')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Room Extras</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="extras"
+        placeholder="Enter Room Extras"
+      />
+      <mat-error *ngIf="addRoomForm.get('extras')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button [disabled]="addRoomForm.invalid" mat-button color="primary">
+        Add Room
+      </button>
+    </div>
+    <!-- <div *ngIf="isLoginFailed" class="alert alert-danger" role="alert">
+      Login failed: {{ errorMessage }}
+    </div> -->
+  </form>
+
+<!-- <div class="alert alert-success" *ngIf="isLoggedIn">
+  Logged in as {{ roles }}.
+</div> -->
