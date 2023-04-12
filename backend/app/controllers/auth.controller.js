@@ -48,7 +48,7 @@ exports.signin = async (req, res) => {
     const disabledAccount = user.isDisabled;
 
     if(disabledAccount){
-      return res.status(401).send({message:"User account is Disabled"});
+      return res.send({message:"User account is Disabled"});
     }
    
 

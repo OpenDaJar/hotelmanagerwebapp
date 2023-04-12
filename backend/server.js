@@ -23,31 +23,43 @@ app.use(
   cookieSession({
     name: "test-session",
     secret: "COOKIE_SECRET", // should use as secret environment variable
-    httpOnly: true
+    httpOnly: true,
   })
 );
 
 const db = require("./app/models");
 const Role = db.role;
 
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Db');
-//   initial();
-// });
+//to DROP and Resync DB
+// db.sequelize
+//   .sync({ force: true })
+//   .then(() => {
+//     console.log("Drop and Resync Db");
+//     initial();
+//   })
+//   .catch((err) => {
+//     console.log("Failed to sync db: " + err.message);
+//   });
 
-db.sequelize.sync().then(() => {
-  console.log(' Resync Db');
-});
-
+//Resync DB
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log(" Resync Db");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to backend application." });
 });
 
 // routes
-require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
+require("./app/routes/room.routes")(app);
 
 // set port, listen for requestss
 const PORT = process.env.PORT || 8080;
@@ -58,13 +70,11 @@ app.listen(PORT, () => {
 function initial() {
   Role.create({
     id: 1,
-    name: "admin"
+    name: "admin",
   });
 
   Role.create({
     id: 2,
-    name: "moderator"
+    name: "moderator",
   });
- 
-
 }
