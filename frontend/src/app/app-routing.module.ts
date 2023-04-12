@@ -28,6 +28,32 @@ const routes: Routes = [
         (m) => m.ProfileModule
       ),
   },
+  {
+    path: 'add-room',
+    loadChildren: () =>
+      import('./components/add-room/add-room.module').then(
+        (m) => m.AddRoomModule
+      ),
+  },
+  {
+    path: 'rooms',
+    loadChildren: () =>
+      import('./components/rooms/rooms.module').then((m) => m.RoomsModule),
+  },
+  {
+    path: 'add-booking',
+    loadChildren: () =>
+      import('./components/add-booking/add-booking.module').then(
+        (m) => m.AddBookingModule
+      ),
+  },
+  {
+    path: 'bookings',
+    loadChildren: () =>
+      import('./components/bookings/bookings.module').then(
+        (m) => m.BookingsModule
+      ),
+  },
 ];
 
 @NgModule({
