@@ -63,11 +63,11 @@
         Add Room
       </button>
     </div>
-    <!-- <div *ngIf="isLoginFailed" class="alert alert-danger" role="alert">
-      Login failed: {{ errorMessage }}
-    </div> -->
+    <div *ngIf="roomAddedFailed" class="alert alert-danger" role="alert">
+      Adding Room failed: {{ errorMessage }}
+    </div>
   </form>
 
-<!-- <div class="alert alert-success" *ngIf="isLoggedIn">
-  Logged in as {{ roles }}.
-</div> -->
+<div class="alert alert-success" *ngIf="roomAdded">
+  Room Added!
+</div>
