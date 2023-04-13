@@ -58,7 +58,7 @@ export class AddRoomComponent implements OnInit {
       },
       error: (e) => {
         console.error(e)
-        this.errorMessage = e;
+        this.errorMessage = e.error.message;
         this.roomAddedFailed = true;
       }
     });
