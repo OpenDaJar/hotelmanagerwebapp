@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Room } from '../../models/room.model';
 import { RoomService } from './services/room.service';
 import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
+import { RoomEditComponent } from './room-edit/room-edit.component';
 
 @Component({
   selector: 'app-rooms',
@@ -14,8 +15,7 @@ export class RoomsComponent implements OnInit {
   message = '';
   tableCols?: string[] = ['number', 'type', 'price', 'extras', 'available','edit','delete'];
 
-  // constructor(private roomService: RoomService,private dialog: MatDialog) {}
-  constructor(private roomService: RoomService) {}
+  constructor(private roomService: RoomService, private dialog:MatDialog) {}
 
   ngOnInit() {
     this.retrieveAllRooms();
@@ -30,63 +30,35 @@ export class RoomsComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
-
+  //retrieve room with id and proceed to Editing Dialog
   retrieveRoom(id: any): void {
     this.roomService.getRoom(id).subscribe({
       next: (data) => {
         this.room = data;
-        console.log(data);
+        // console.log(data);
+      },
+      complete:()=>{
+        console.log("Retrieve Room: ",this.room)
+        this.dialog.open(RoomEditComponent, {
+          data: this.room,
+        })
       },
       error: (e) => console.log(e),
     });
   }
 
-  updateRoom(id: any): void {
-    //for testing
-    // this.retrieveRoom(id)
-
-    const data = {
-      number: this.room?.number,
-      type: this.room?.type,
-      price: this.room?.price,
-      extras: this.room?.extras,
-      available: this.room?.available,
-    };
-    this.message = '';
-
-    this.roomService.updateRoom(id, data).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.message = res.message
-          ? res.message
-          : 'This tutorial was updated successfully!';
-      },
-      error: (e) => console.error(e),
-    });
-  }
 
   clickedRow(row:Room):void{
-    console.log(row);
+    // console.log(row);
   }
 
-  clickedEdit(room:Room):void{
-    console.log("clicked Edit",room.id);
-    // this.openDialog();
-
+  //Edit Button
+  clickedEdit(id:any):void{
+    console.log("clicked Edit",id);
+    this.retrieveRoom(id);
   }
 
   clickedRemove(room:Room):void{
     console.log("clicked Remove",room.id)
   }
-
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(RoomDialogComponent, {
-  //     data: {name: "this.name", animal: "this.animal"},
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //     // this.animal = result;
-  //   });
-  // }
 }
