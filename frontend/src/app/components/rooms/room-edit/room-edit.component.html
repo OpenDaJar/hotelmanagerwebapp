@@ -1,11 +1,7 @@
 <form [formGroup]="updateRoomForm" (ngSubmit)="onSubmit()">
   <mat-form-field class="form-field">
     <mat-label>Room Number</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="number"
-    />
+    <input type="text" matInput formControlName="number" />
     <mat-error *ngIf="updateRoomForm.get('number')?.hasError('required')">
       Field is Required
     </mat-error>
@@ -29,7 +25,6 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field class="form-field">
-
     <mat-label>Room Price</mat-label>
 
     <input
@@ -54,12 +49,21 @@
       Field is Required
     </mat-error>
   </mat-form-field>
+  <mat-dialog-actions>
+    <div>
+      <button
+        [disabled]="updateRoomForm.invalid"
+        type="submit"
+        [mat-dialog-close]="true"
+        mat-button
+        color="primary"
+      >
+        Update Room
+      </button>
+    </div>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
 
-  <div>
-    <button [disabled]="updateRoomForm.invalid" mat-button color="primary">
-      Update Room
-    </button>
-  </div>
   <div *ngIf="roomUpdateFailed" class="alert alert-danger" role="alert">
     Update Room failed: {{ errorMessage }}
   </div>

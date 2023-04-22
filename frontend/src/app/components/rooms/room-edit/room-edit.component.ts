@@ -18,7 +18,6 @@ export class RoomEditComponent implements OnInit {
   message!: string;
   updateRoomForm!: FormGroup;
   errorMessage = '';
-  roomUpdated = false;
   roomUpdateFailed = false;
 
   constructor(
@@ -81,6 +80,9 @@ export class RoomEditComponent implements OnInit {
         this.message = res.message
           ? res.message
           : 'This Room was updated successfully!';
+
+
+
       },
       error: (e) => console.error(e),
     });
