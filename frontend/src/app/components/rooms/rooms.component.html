@@ -1,4 +1,6 @@
-<button mat-raised-button color="primary" (click)="retrieveAllRooms()">Refresh Rooms</button>
+<button mat-raised-button color="primary" (click)="retrieveAllRooms()">
+  Refresh Rooms
+</button>
 <table mat-table [dataSource]="rooms" class="mat-elevation-z8 demo-table">
   <!-- Number Column -->
   <ng-container matColumnDef="number">
@@ -33,7 +35,7 @@
   <!-- Edit Column -->
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef>Edit Room</th>
-    <td mat-cell *matCellDef="let room" >
+    <td mat-cell *matCellDef="let room">
       <button mat-raised-button (click)="clickedEdit(room.id)">Edit</button>
     </td>
   </ng-container>
@@ -41,7 +43,9 @@
   <!-- Delete Column -->
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef>Delete Room</th>
-    <td mat-cell *matCellDef="let room"><button mat-raised-button (click)="clickedRemove(room)">Delete</button></td>
+    <td mat-cell *matCellDef="let room">
+      <button mat-raised-button (click)="clickedRemove(room.id)">Delete</button>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="tableCols"></tr>

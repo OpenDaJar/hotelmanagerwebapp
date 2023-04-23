@@ -3,6 +3,7 @@ import { Room } from '../../models/room.model';
 import { RoomService } from './services/room.service';
 import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
 import { RoomEditComponent } from './room-edit/room-edit.component';
+import { RoomDeleteComponent } from './room-delete/room-delete.component';
 
 @Component({
   selector: 'app-rooms',
@@ -58,7 +59,11 @@ export class RoomsComponent implements OnInit {
     this.retrieveRoom(id);
   }
 
-  clickedRemove(room:Room):void{
-    console.log("clicked Remove",room.id)
+  //delete room
+  clickedRemove(id:any):void{
+    console.log("clicked Remove",id)
+    this.dialog.open(RoomDeleteComponent, {
+      data: id
+    })
   }
 }
