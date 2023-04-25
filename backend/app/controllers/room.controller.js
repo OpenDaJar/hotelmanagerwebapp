@@ -3,7 +3,7 @@ const db = require("../models");
 const Room = db.room;
 
 //create and save new room
-exports.addRoom = async (req, res) => {
+exports.addRoom = (req, res) => {
   //if room fields are undefined
   if(Object.keys(req.body).length === 0){
     res.send({message: "Room not Defined"});
@@ -24,13 +24,13 @@ exports.addRoom = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creting new Room.",
+        message: err.message || "Some error occurred while creating new Room.",
       });
     });
 };
 
 //Retrieve all rooms
-exports.findAll = async (req, res) => {
+exports.findAll = (req, res) => {
   
   Room.findAll()
     .then(data => {
@@ -45,7 +45,7 @@ exports.findAll = async (req, res) => {
 };
 
 // Find a single Room with an id
-exports.findOne = async (req, res) => {
+exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Room.findByPk(id)
@@ -66,7 +66,7 @@ exports.findOne = async (req, res) => {
 };
 
 // Update a Room by the id in the request
-exports.update = async (req, res) => {
+exports.update = (req, res) => {
   const id = req.params.id;
 
   Room.update(req.body, {
@@ -91,7 +91,7 @@ exports.update = async (req, res) => {
 };
 
 // Delete a Room with the specified id in the request
-exports.delete = async (req, res) => {
+exports.delete = (req, res) => {
   const id = req.params.id;
   Room.destroy({
     where: { id: id }
@@ -115,7 +115,7 @@ exports.delete = async (req, res) => {
 };
 
 //Find all available rooms
-exports.findAllAvailable = async (req, res) => {
+exports.findAllAvailable = (req, res) => {
   const isAvailable = req.query.isAvailable;
 
   Room.findAll({ where: {available: isAvailable} })
