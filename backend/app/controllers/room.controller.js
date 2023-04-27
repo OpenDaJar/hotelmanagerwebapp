@@ -1,15 +1,16 @@
 ////handle addroom,remove room, edit room,
 const db = require("../models");
 const Room = db.room;
+const Booking = db.booking;
 
 //create and save new room
 exports.addRoom = (req, res) => {
   //if room fields are undefined
-  if(Object.keys(req.body).length === 0){
-    res.send({message: "Room not Defined"});
+  if (Object.keys(req.body).length === 0) {
+    res.send({ message: "Room not Defined" });
     return;
   }
-  
+
   //Create a Room
   const room = {
     number: req.body.number,
@@ -31,15 +32,14 @@ exports.addRoom = (req, res) => {
 
 //Retrieve all rooms
 exports.findAll = (req, res) => {
-  
   Room.findAll()
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving all Rooms."
+          err.message || "Some error occurred while retrieving all Rooms.",
       });
     });
 };
@@ -49,18 +49,18 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Room.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Room with id=${id}.`
+          message: `Cannot find Room with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Room with id=" + id
+        message: "Error retrieving Room with id=" + id,
       });
     });
 };
@@ -70,62 +70,55 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Room.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: `Room with id=${id} was updated successfully.`
+          message: `Room with id=${id} was updated successfully.`,
         });
       } else {
         res.send({
-          message: `Cannot update Room with id=${id}. Maybe Room was not found or req.body is empty!`
+          message: `Cannot update Room with id=${id}. Maybe Room was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Room with id=" + id
+        message: "Error updating Room with id=" + id,
       });
     });
 };
 
-// Delete a Room with the specified id in the request
-exports.delete = (req, res) => {
+// Delete a Room with the specified id
+exports.delete = async (req, res) => {
+
   const id = req.params.id;
-  Room.destroy({
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: `Room with id=${id} was deleted successfully!`
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Room with id=${id}. Maybe Room was not found!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Room with id=" + id
-      });
-    });
+
+  try {
+    //Find Room
+    const room = await Room.findByPk(id);
+    if (!room) return res.status(404).send({ message: "Room not found" });
+    //Destroy room
+    const result = await room.destroy();
+    if (result) return res.send({ message: "Room deleted successfully!" });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+
 };
 
 //Find all available rooms
 exports.findAllAvailable = (req, res) => {
   const isAvailable = req.query.isAvailable;
 
-  Room.findAll({ where: {available: isAvailable} })
-    .then(data => {
+  Room.findAll({ where: { available: isAvailable } })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving rooms."
+        message: err.message || "Some error occurred while retrieving rooms.",
       });
     });
 };

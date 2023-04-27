@@ -12,4 +12,16 @@ module.exports = function (app) {
     // [authJwt.verifyToken, authJwt.isAdmin],
     controller.createBooking
   );
+
+  app.get(
+    "/api/bookings/findBookings/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.findBookings
+  )
+
+  app.get(
+    "/api/bookings/findAllBookings",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.findAllBookings
+  )
 };
