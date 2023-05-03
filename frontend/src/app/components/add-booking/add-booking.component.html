@@ -1,1 +1,60 @@
-<p>add-booking works!</p>
+{{ addBookingForm.value | json }}
+{{roomTypes|json}}
+<form [formGroup]="addBookingForm" (ngSubmit)="onSubmit()">
+  <!-- Client Name -->
+  <mat-form-field class="form-field">
+    <mat-label>Client Name</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="clientName"
+      placeholder="Enter Client Name"
+    />
+    <mat-error *ngIf="addBookingForm.get('clientName')?.hasError('required')"
+      >Field is Required</mat-error
+    >
+    <mat-error *ngIf="addBookingForm.get('clientName')?.hasError('minlength')">
+      Min Length is 3
+    </mat-error>
+  </mat-form-field>
+  <!-- Checkin/out Date Picker -->
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="rangePicker">
+      <input matStartDate
+       matInput
+      formControlName="checkin"
+      placeholder="Start date">
+      <input matEndDate
+      matInput
+      formControlName="checkout"
+      placeholder="End date">
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #rangePicker>
+      <mat-date-range-picker-actions>
+        <button mat-button matDateRangePickerCancel>Cancel</button>
+        <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+    <mat-error *ngIf="addBookingForm.get('checkin')?.hasError('required')"
+      >Field is Required</mat-error
+    >
+    <mat-error *ngIf="addBookingForm.get('chekout')?.hasError('required')"
+      >Field is Required</mat-error
+    >
+
+  </mat-form-field>
+<!-- Room Type -->
+<mat-form-field appearance="fill" class="form-field">
+  <mat-label>Select Room Type</mat-label>
+  <mat-select (selectionChange)="retrieveRoomsByType()" formControlName="roomType">
+    <mat-option  [value]="roomTypes[0]">Deluxe</mat-option>
+    <mat-option  [value]="roomTypes[1]">Common</mat-option>
+  </mat-select>
+  <mat-error *ngIf="addBookingForm.get('roomType')?.hasError('required')"
+      >Field is Required</mat-error
+    >
+</mat-form-field>
+</form>

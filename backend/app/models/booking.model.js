@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DATE
     },
     price: {
-      type: Sequelize.FLOAT(6, 3)
+      type: Sequelize.FLOAT(12,2).UNSIGNED
     },
     notes:{
       type:Sequelize.STRING

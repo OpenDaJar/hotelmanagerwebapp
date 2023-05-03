@@ -29,8 +29,7 @@ export class AddRoomComponent implements OnInit {
         updateOn: 'blur',
       }),
       type: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(3)],
-        updateOn: 'blur',
+        validators: [Validators.required]
       }),
       price: new FormControl('', {
         validators: [Validators.required],

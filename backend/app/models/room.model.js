@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     price: {
-      type: Sequelize.FLOAT(6, 3)
+      type: Sequelize.FLOAT(10,2).UNSIGNED
     },
     extras: {
       type: Sequelize.STRING

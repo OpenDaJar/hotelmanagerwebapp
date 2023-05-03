@@ -27,6 +27,11 @@ module.exports = function (app) {
     controller.findOne
   );
 
+  app.get(
+    "/api/rooms/getRoomsByType/:type",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.findRoomsByType
+  )
   app.put(
     "/api/rooms/updateRoom/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
@@ -38,4 +43,6 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.delete
   );
+
+
 };

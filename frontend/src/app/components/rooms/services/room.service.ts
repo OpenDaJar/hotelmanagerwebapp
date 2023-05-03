@@ -28,4 +28,8 @@ export class RoomService {
   deleteRoom(id: any): Observable<any> {
     return this.http.delete(`${API_URL}/deleteRoom/${id}`);
   }
+
+  getRoomByType(type:any):Observable<Room[]>{
+    return this.http.get<Room[]>(`${API_URL}/getRoomsByType/${type}`);
+  }
 }

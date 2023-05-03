@@ -4,5 +4,6 @@ export class BookRoom {
   checkin?:Date;
   checkout?:Date;
   price?:number;
+  roomId?:number;
   notes?:string;
 }
