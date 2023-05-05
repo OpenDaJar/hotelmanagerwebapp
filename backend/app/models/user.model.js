@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
     isDisabled: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
+    },
+    role:{
+      type: Sequelize.STRING,
+      allowNull: false,
     }
   });
 

@@ -27,14 +27,8 @@ verifyToken = (req, res, next) => {
 isAdmin = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
-
-    for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "admin") {
-        return next();
-      }
-    }
-
+    if (!user) return res.send({ message: "No user found" });
+    if (user.role === "admin") return next();
     return res.status(403).send({
       message: "Require Admin Role!",
     });
@@ -48,13 +42,8 @@ isAdmin = async (req, res, next) => {
 isModerator = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
-
-    for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "moderator") {
-        return next();
-      }
-    }
+    if (!user) return res.send({ message: "No user found" });
+    if (user.role === "moderator") return next();
 
     return res.status(403).send({
       message: "Require Moderator Role!",
@@ -69,18 +58,8 @@ isModerator = async (req, res, next) => {
 isModeratorOrAdmin = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
-
-    for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "moderator") {
-        return next();
-      }
-
-      if (roles[i].name === "admin") {
-        return next();
-      }
-    }
-
+    if (!user) return res.send({ message: "No user found" });
+    if (user.role === "admin" || user.role === "moderator") return next();
     return res.status(403).send({
       message: "Require Moderator or Admin Role!",
     });

@@ -5,7 +5,6 @@ const cookieSession = require("cookie-session");
 
 const app = express();
 
-// app.use(cors());
 app.use(
   cors({
     credentials: true,
@@ -28,18 +27,16 @@ app.use(
 );
 
 const db = require("./app/models");
-const Role = db.role;
 
 //to DROP and Resync DB
-// db.sequelize
-//   .sync({ force: true })
-//   .then(() => {
-//     console.log("Drop and Resync Db");
-//     initial();
-//   })
-//   .catch((err) => {
-//     console.log("Failed to sync db: " + err.message);
-//   });
+db.sequelize
+  // .sync({ force: true })
+  // .then(() => {
+  //   console.log("Drop and Resync Db");
+  // })
+  // .catch((err) => {
+  //   console.log("Failed to sync db: " + err.message);
+  // });
 
 //Resync DB
 db.sequelize
@@ -58,7 +55,6 @@ app.get("/", (req, res) => {
 
 // routes
 require("./app/routes/auth.routes")(app);
-require("./app/routes/user.routes")(app);
 require("./app/routes/room.routes")(app);
 require("./app/routes/booking.routes")(app);
 
@@ -68,14 +64,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-function initial() {
-  Role.create({
-    id: 1,
-    name: "admin",
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator",
-  });
-}
