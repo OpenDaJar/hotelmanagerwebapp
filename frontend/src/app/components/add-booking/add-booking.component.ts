@@ -18,12 +18,17 @@ import { roomTypes } from 'src/app/globals';
 })
 export class AddBookingComponent implements OnInit {
   booking?: BookRoom;
+  selectedRoom?: Room;
   rooms: Room[] = [{}];
   roomTypes: string[] = roomTypes;
   addBookingForm!: FormGroup;
   errorMeesage = '';
   bookingAdded = false;
   bookingAddedFailed = false;
+  displayRooms = false;
+  displaySelected = false;
+  tableCols?: string[] = ['number', 'price', 'extras'];
+  bookingPrice = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -37,13 +42,18 @@ export class AddBookingComponent implements OnInit {
 
   //Get Rooms with "type"
   retrieveRoomsByType(): void {
-    const type = this.addBookingForm.get("roomType")?.value
-    this.roomService.getRoomByType(type).subscribe({
-      next: (data) => {
-        this.rooms = data;
-      },
-      error: (e) => console.error(e),
-    });
+    console.log('called');
+    const type = this.addBookingForm.get('roomType')?.value;
+    if (type != '') {
+      this.roomService.getRoomByType(type).subscribe({
+        next: (data) => {
+          this.rooms = data;
+        },
+        error: (e) => console.error(e),
+      });
+      this.displayRooms = true;
+      this.displaySelected = false;
+    }
   }
 
   //Create Form
@@ -67,7 +77,11 @@ export class AddBookingComponent implements OnInit {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
-      price: new FormControl('', {
+      // price: new FormControl({value:0, disabled: true}, {
+      //   validators: [Validators.required],
+      //   updateOn: 'blur',
+      // }),
+      notes: new FormControl('', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
@@ -76,30 +90,46 @@ export class AddBookingComponent implements OnInit {
 
   //submit data and refresh page when done
   onSubmit(): void {
-    console.log(this.addBookingForm.value);
-    // this.booking = {
-    //   clientName: this.addBookingForm.get('clientName')?.value,
-    //   checkin: this.addBookingForm.get('checkin')?.value,
-    //   checkout: this.addBookingForm.get('checkout')?.value,
-    //   price: this.addBookingForm.get('price')?.value,
-    //   notes: this.addBookingForm.get('notes')?.value,
-    //   roomId: this.addBookingForm.get('roomId')?.value,
-    // };
+    this.bookingPriceCalc();
 
-    // this.addBookingService.createBooking(this.booking).subscribe({
-    //   next: (res) => {
-    //     console.log(res);
-    //     this.bookingAdded = true;
-    //   },
-    //   complete: () => {
-    //     this.refreshPage();
-    //   },
-    //   error: (e) => {
-    //     console.log(e);
-    //     this.errorMeesage = e.error.message;
-    //     this.bookingAddedFailed = true;
-    //   },
-    // });
+    const checkin = this.addBookingForm
+      .get('checkin')
+      ?.value.toDate()
+      .toLocaleDateString();
+    const checkout = this.addBookingForm
+      .get('checkout')
+      ?.value.toDate()
+      .toLocaleDateString();
+
+    // const date = this.addBookingForm.get("checkin")?.value.toDate()
+    // const dateSp= String(date).split(" ", 4)
+    // dateSp.shift()
+    // console.log("DATE:",  dateSp.join(" ") )
+
+    this.booking = {
+      clientName: this.addBookingForm.get('clientName')?.value,
+      checkin: checkin,
+      checkout: checkout,
+      price: this.bookingPrice,
+      notes: this.addBookingForm.get('notes')?.value,
+      roomId: this.selectedRoom?.id,
+    };
+    console.log(this.booking);
+
+    this.addBookingService.createBooking(this.booking).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.bookingAdded = true;
+      },
+      complete: () => {
+        this.refreshPage();
+      },
+      error: (e) => {
+        console.log(e);
+        this.errorMeesage = e.error.message;
+        this.bookingAddedFailed = true;
+      },
+    });
   }
 
   //refresh page
@@ -107,4 +137,40 @@ export class AddBookingComponent implements OnInit {
     console.log('refreshing page');
   }
 
+  //clicked row and disable roomTypes selection
+  clickedRow(row: Room): void {
+    this.selectedRoom = row;
+    this.rooms = [this.selectedRoom];
+    this.displaySelected = true;
+    this.addBookingForm.controls['roomId'].setValue(this.selectedRoom.id);
+  }
+
+  //return roomTypes selection
+  cancelSelection(): void {
+    this.displaySelected = false;
+    this.displayRooms = false;
+    this.addBookingForm.controls['roomType'].reset();
+    this.bookingPrice = 0;
+    this.addBookingForm.controls['roomId'].setValue('');
+  }
+
+  //booking price calculator
+  bookingPriceCalc(): void {
+    let roomRate = this.selectedRoom?.price;
+    if (roomRate == undefined) roomRate = 0;
+
+    let days =
+      (this.addBookingForm.get('checkout')?.value.toDate() -
+        this.addBookingForm.get('checkin')?.value.toDate()) /
+      (24 * 60 * 60 * 1000);
+    if (days == undefined) days = 0;
+
+    let price = 0;
+    if (roomRate != undefined) {
+      price = roomRate * days;
+    }
+
+    console.log(`Room RAte: ${roomRate}, Days: ${days}, total:${price}`);
+    this.bookingPrice = price;
+  }
 }

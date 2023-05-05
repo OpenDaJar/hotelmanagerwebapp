@@ -127,7 +127,7 @@ exports.findAllAvailable = (req, res) => {
 exports.findRoomsByType = async (req, res) => {
   try {
     const type = req.params.type;
-    const rooms = await Room.findAll({ where: { type: type } });
+    const rooms = await Room.findAll({ where: { type: type , available:true} });
     if (!rooms) return res.send({ message: `No ${type} rooms.` });
     let result = [];
     //new array so it wont send dates

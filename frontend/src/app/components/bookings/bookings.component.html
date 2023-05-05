@@ -1,1 +1,94 @@
-<p>bookings works!</p>
+<table
+  mat-table
+  [dataSource]="bookings"
+  multiTemplateDataRows
+  class="mat-elevation-z8"
+>
+  <!-- Client Name -->
+  <ng-container matColumnDef="clientName">
+    <th mat-header-cell *matHeaderCellDef>Client's Name</th>
+    <td mat-cell *matCellDef="let booking">{{ booking.clientName }}</td>
+  </ng-container>
+  <!-- Room Number -->
+  <ng-container matColumnDef="roomNumber">
+    <th mat-header-cell *matHeaderCellDef>Room Number</th>
+    <td mat-cell *matCellDef="let booking">
+      {{ getRoomNumber(booking.roomId) }}
+    </td>
+  </ng-container>
+  <!-- Notes -->
+  <ng-container matColumnDef="notes">
+    <th mat-header-cell *matHeaderCellDef>Booking Notes</th>
+    <td mat-cell *matCellDef="let booking">{{ booking.notes }}</td>
+  </ng-container>
+  <!-- Price -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Total Price</th>
+    <td mat-cell *matCellDef="let booking">{{ booking.price }}</td>
+  </ng-container>
+  <!-- Checkin-->
+  <ng-container matColumnDef="checkin">
+    <th mat-header-cell *matHeaderCellDef>Checkin Date</th>
+    <td mat-cell *matCellDef="let booking">{{ booking.checkin }}</td>
+  </ng-container>
+  <!-- Checkout -->
+  <ng-container matColumnDef="checkout">
+    <th mat-header-cell *matHeaderCellDef>Checkout Date</th>
+    <td mat-cell *matCellDef="let booking">{{ booking.checkout }}</td>
+  </ng-container>
+  <!-- Expand -->
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let room">
+      <button
+        mat-icon-button
+        aria-label="expand row"
+        (click)="
+          expandedElement = expandedElement === room ? null : room;
+          $event.stopPropagation()
+        "
+      >
+        <mat-icon *ngIf="expandedElement !== room"
+          >keyboard_arrow_down</mat-icon
+        >
+        <mat-icon *ngIf="expandedElement === room">keyboard_arrow_up</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let booking"
+      [attr.colspan]="columnsToDisplayWithExpand.length"
+    >
+      <div
+        class="example-element-detail"
+        [@detailExpand]="booking == expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <div>
+          Room Number {{ room.number }} | Room Type: {{ room.type }} | Price per
+          Day: {{ room.price }} | Extras: {{ room.extras }}
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr
+    mat-row
+    *matRowDef="let bookingExp; columns: columnsToDisplayWithExpand"
+    class="example-element-row"
+    [class.example-expanded-row]="expandedElement === bookingExp"
+    (click)="
+      expandedElement = expandedElement === bookingExp ? null : bookingExp;
+      getRoom(bookingExp.roomId)
+    "
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="example-detail-row"
+  ></tr>
+</table>
