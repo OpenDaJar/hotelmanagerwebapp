@@ -2,9 +2,6 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
-// const Role = db.role;
-
-const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -20,17 +17,6 @@ exports.signup = async (req, res) => {
     });
 
     if (user) res.send({ message: "User registered successfully!" });
-
-    // if (req.body.roles) {
-    //   const roles = await Role.findAll({
-    //     where: {
-    //       name: req.body.roles
-    //     },
-    //   });
-    //   const result = user.setRoles(roles);
-
-    //   if (result) res.send({ message: "User registered successfully!" });
-    // }
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -69,7 +55,7 @@ exports.signin = async (req, res) => {
       // expiresIn: 86400, // 24 hours
       expiresIn: "30d",
     });
-    
+
     req.session.token = token;
 
     return res.status(200).send({
