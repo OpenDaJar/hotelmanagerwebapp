@@ -8,8 +8,8 @@ exports.createBooking = async (req, res) => {
   try {
     const room = await Room.findByPk(req.body.roomId);
     if (!room)
-      return res.send({
-        message: `Room with ID: ${req.body.roomId} does not exist`,
+      return res.status(404).send({
+        message: `Room with ID: ${req.body.roomId} not found.`,
       });
 
     const booking = await Booking.create({
@@ -22,7 +22,7 @@ exports.createBooking = async (req, res) => {
     });
 
     if (booking)
-      res.send({
+      res.status(200).send({
         message: "Booking Created",
       });
   } catch (error) {
@@ -36,12 +36,12 @@ exports.deleteBooking = async (req, res) => {
     const id = req.params.id;
     const booking = await Booking.findByPk(id);
     if (!booking)
-      return res.send({
-        message: `No booking with ID:${id} found for deletion`,
+      return res.status(404).send({
+        message: `No booking with ID:${id} found for deletion.`,
       });
     const result = await booking.destroy();
     if (result)
-      res.send({
+      res.status(200).send({
         message: `Booking with ID:${id} deleted successfully!`,
       });
   } catch (error) {
@@ -56,8 +56,8 @@ exports.findBooking = async (req, res) => {
     const booking = await Booking.findByPk(id);
     console.log(booking);
     if (!booking)
-      return res.send({ message: `Booking with ID ${id} does not exist` });
-    res.send(booking);
+      return res.status(404).send({ message: `Booking with ID ${id} not found.` });
+    res.status(200).send(booking);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -69,7 +69,7 @@ exports.findBookings = async (req, res) => {
     const id = req.params.id;
     const room = await Room.findByPk(id);
     if (!room)
-      return res.send({ message: `Room with ID ${id} does not exist` });
+      return res.status(404).send({ message: `Room with ID ${id} not found.` });
     //get bookings for Room
     const bookings = await room.getBookings();
     //return bookings for Room
@@ -84,7 +84,7 @@ exports.findBookings = async (req, res) => {
         notes: booking.notes,
       });
     });
-    res.send(result);
+    res.status(200).send(result);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -94,7 +94,8 @@ exports.findBookings = async (req, res) => {
 exports.findAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.findAll();
-    if (bookings) return res.send(bookings);
+    if (!bookings) return res.status(404).send({message:"No bookings found"});
+    res.status(200).send(bookings);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -108,8 +109,8 @@ exports.updateBooking = async (req, res) => {
       where: { id: id },
     });
     if (!booking)
-      return res.send({ message: `Booking with ID:${id} cannot update` });
-    res.send("Room updated successfully!");
+      return res.status(404).send({ message: `Booking with ID:${id} cannot update` });
+    res.status(200).send("Room updated successfully!");
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

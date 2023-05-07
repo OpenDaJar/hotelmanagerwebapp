@@ -16,7 +16,8 @@ exports.signup = async (req, res) => {
       role: req.body.role,
     });
 
-    if (user) res.send({ message: "User registered successfully!" });
+    if (user)
+      res.status(200).send({ message: "User registered successfully!" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -34,12 +35,6 @@ exports.signin = async (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
 
-    const disabledAccount = user.isDisabled;
-
-    if (disabledAccount) {
-      return res.send({ message: "User account is Disabled" });
-    }
-
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
       user.password
@@ -49,6 +44,12 @@ exports.signin = async (req, res) => {
       return res.status(401).send({
         message: "Invalid Password!",
       });
+    }
+
+    const disabledAccount = user.isDisabled;
+
+    if (disabledAccount) {
+      return res.status(403).send({ message: "User account is Disabled" });
     }
 
     const token = jwt.sign({ id: user.id }, config.secret, {
@@ -76,7 +77,7 @@ exports.signout = async (req, res) => {
     return res.status(200).send({
       message: "You've been signed out!",
     });
-  } catch (err) {
-    this.next(err);
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
   }
 };
