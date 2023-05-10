@@ -30,14 +30,18 @@ export class NavbarComponent {
       const user = this.storageService.getUser();
       this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      // this.showAdminBoard = this.roles.includes('ADMIN');
+      // this.showModeratorBoard = this.roles.includes('MODERATOR');
 
       this.username = user.username;
     }
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
+  }
+
+  isAdmin():boolean{
+    return this.storageService.isAdmin();
   }
 
   logout(): void {

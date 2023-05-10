@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 const USER_KEY = 'auth-user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
   constructor() {}
@@ -34,4 +34,14 @@ export class StorageService {
 
     return false;
   }
+
+  public isAdmin(): boolean {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      const data = JSON.parse(user);
+      if (data.role === 'admin') return true;
+    }
+    return false;
+  }
+
 }

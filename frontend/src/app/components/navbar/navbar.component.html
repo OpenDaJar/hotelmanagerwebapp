@@ -4,7 +4,7 @@
   <div>
     <a class="navbar-brand" routerLink="/">Hotel Manager</a>
 
-    <div class="btn-group" dropdown>
+    <div *ngIf="isLoggedIn" class="btn-group" dropdown>
       <button
         id="button-basic"
         dropdownToggle
@@ -21,7 +21,7 @@
         role="menu"
         aria-labelledby="button-basic"
       >
-        <li role="menuitem">
+        <li role="menuitem" *ngIf="isAdmin()">
           <a class="dropdown-item" routerLink="/add-room">Add Room</a>
         </li>
         <li role="menuitem">
@@ -29,7 +29,7 @@
         </li>
       </ul>
     </div>
-    <div class="btn-group" dropdown>
+    <div *ngIf="isLoggedIn" class="btn-group" dropdown>
       <button
         id="button-basic"
         dropdownToggle
@@ -46,7 +46,7 @@
         role="menu"
         aria-labelledby="button-basic"
       >
-        <li role="menuitem">
+        <li *ngIf="isAdmin()" role="menuitem">
           <a class="dropdown-item" routerLink="/add-booking">Add Booking</a>
         </li>
         <li role="menuitem">
@@ -68,7 +68,7 @@
         class="btn dropdown-toggle"
         aria-controls="dropdown-basic"
       >
-        {{username}}
+        {{ username }}
       </button>
       <ul
         id="dropdown-basic"
@@ -78,9 +78,6 @@
         aria-labelledby="button-basic"
       >
         <li role="menuitem">
-          <a class="dropdown-item" routerLink="/dashboard">Dashboard</a>
-        </li>
-        <li role="menuitem">
           <a class="dropdown-item" routerLink="/profile">Profile</a>
         </li>
         <li role="menuitem">
@@ -89,6 +86,4 @@
       </ul>
     </div>
   </div>
-
 </header>
-

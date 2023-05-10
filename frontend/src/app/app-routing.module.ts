@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthguardGuard } from './_shared/authguard.guard';
 
 const routes: Routes = [
   {
@@ -7,19 +8,21 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/login/login.module').then((m) => m.LoginModule),
   },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./components/board-admin/board-admin.module').then(
-        (m) => m.BoardAdminModule
-      ),
-  },
+  // {
+  //   path: 'admin',
+  //   loadChildren: () =>
+  //     import('./components/board-admin/board-admin.module').then(
+  //       (m) => m.BoardAdminModule
+  //     ),
+  //   canActivate: [AuthguardGuard],
+  // },
   {
     path: 'register',
     loadChildren: () =>
       import('./components/register/register.module').then(
         (m) => m.RegisterModule
       ),
+    canActivate: [AuthguardGuard],
   },
   {
     path: 'profile',
@@ -27,6 +30,7 @@ const routes: Routes = [
       import('./components/profile/profile.module').then(
         (m) => m.ProfileModule
       ),
+    canActivate: [AuthguardGuard],
   },
   {
     path: 'add-room',
@@ -34,11 +38,13 @@ const routes: Routes = [
       import('./components/add-room/add-room.module').then(
         (m) => m.AddRoomModule
       ),
+    canActivate: [AuthguardGuard],
   },
   {
     path: 'rooms',
     loadChildren: () =>
       import('./components/rooms/rooms.module').then((m) => m.RoomsModule),
+    canActivate: [AuthguardGuard],
   },
   {
     path: 'add-booking',
@@ -46,6 +52,7 @@ const routes: Routes = [
       import('./components/add-booking/add-booking.module').then(
         (m) => m.AddBookingModule
       ),
+    canActivate: [AuthguardGuard],
   },
   {
     path: 'bookings',
@@ -53,6 +60,7 @@ const routes: Routes = [
       import('./components/bookings/bookings.module').then(
         (m) => m.BookingsModule
       ),
+    canActivate: [AuthguardGuard],
   },
 ];
 
