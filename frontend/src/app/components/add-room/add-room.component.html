@@ -1,4 +1,5 @@
 {{ addRoomForm.value | json }}
+{{addRoomForm.pristine |json}}
 <form [formGroup]="addRoomForm" (ngSubmit)="onSubmit()">
   <!-- Room Number -->
   <mat-form-field class="form-field">
