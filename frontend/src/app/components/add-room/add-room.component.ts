@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormGroupDirective,
   Validators,
 } from '@angular/forms';
 import { Room } from '../../models/room.model';
@@ -29,7 +30,7 @@ export class AddRoomComponent implements OnInit {
     this.createForm();
   }
 
-  onSubmit(): void {
+  onSubmit(formDirective: FormGroupDirective): void {
     console.log(this.addRoomForm.value);
     this.room = {
       number: this.addRoomForm.get('number')?.value,
@@ -44,15 +45,9 @@ export class AddRoomComponent implements OnInit {
       },
       complete: () => {
         //reset form and errors
+        formDirective.resetForm();
         this.addRoomForm.reset();
-        Object.keys(this.addRoomForm.controls).forEach((key) => {
-          const control = this.addRoomForm.controls[key];
-          control.setErrors(null);
-      });
-        // this.addRoomForm.controls['number'].setErrors(null)
-        // this.addRoomForm.controls['type'].setErrors(null)
-        // this.addRoomForm.controls['price'].setErrors(null)
-        // this.addRoomForm.controls['extras'].setErrors(null)
+        console.log(this.addRoomForm.value)
       },
       error: (e) => {
         console.error(e);
@@ -60,7 +55,6 @@ export class AddRoomComponent implements OnInit {
         this.roomAddedFailed = true;
       },
     });
-
   }
 
   createForm(): void {
@@ -81,5 +75,9 @@ export class AddRoomComponent implements OnInit {
         updateOn: 'blur',
       }),
     });
+  }
+
+  clearValue(key: string): void {
+    this.addRoomForm.controls[key].setValue('');
   }
 }

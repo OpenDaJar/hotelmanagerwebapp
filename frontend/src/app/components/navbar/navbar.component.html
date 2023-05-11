@@ -3,7 +3,7 @@
 >
   <div>
     <a class="navbar-brand" routerLink="/">Hotel Manager</a>
-
+    <!-- Rooms dropdown -->
     <div *ngIf="isLoggedIn" class="btn-group" dropdown>
       <button
         id="button-basic"
@@ -29,6 +29,7 @@
         </li>
       </ul>
     </div>
+    <!-- Booking Dropdows -->
     <div *ngIf="isLoggedIn" class="btn-group" dropdown>
       <button
         id="button-basic"
@@ -54,10 +55,19 @@
         </li>
       </ul>
     </div>
+    <!-- Register user -->
+    <button
+      type="button"
+      class="btn"
+      *ngIf="isLoggedIn && isAdmin()"
+      routerLink="/register"
+    >
+      Register new User
+    </button>
   </div>
   <div>
-    <button type="button" class="btn" *ngIf="!isLoggedIn">
-      <a routerLink="/login">Login</a>
+    <button type="button" class="btn" *ngIf="!isLoggedIn" routerLink="/login">
+      Login
     </button>
 
     <div class="btn-group" dropdown *ngIf="isLoggedIn">

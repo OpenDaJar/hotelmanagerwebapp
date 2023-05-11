@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
+  FormControlDirective,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string = "";
+  roles: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      this.roles = this.storageService.getUser().role;
     }
 
     this.loginForm = this.fb.group({
@@ -49,19 +50,23 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.controls['password'].value;
 
     this.authService.login(username, password).subscribe({
-      next: data => {
+      next: (data) => {
         this.storageService.saveUser(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
+        this.roles = this.storageService.getUser().role;
         this.reloadPage();
       },
-      error: err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
-      }
+      },
     });
+  }
+
+  clearValue(key: string): void {
+    this.loginForm.controls[key].setValue('');
   }
 
   reloadPage(): void {

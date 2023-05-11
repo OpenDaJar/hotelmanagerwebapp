@@ -1,71 +1,123 @@
-{{ addRoomForm.value | json }}
-{{addRoomForm.pristine |json}}
-<form [formGroup]="addRoomForm" (ngSubmit)="onSubmit()">
-  <!-- Room Number -->
-  <mat-form-field class="form-field">
-    <mat-label>Room Number</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="number"
-      placeholder="Enter Room Number"
-    />
-    <mat-error *ngIf="addRoomForm.get('number')?.hasError('required')">
-      Field is Required
-    </mat-error>
-    <mat-error *ngIf="addRoomForm.get('number')?.hasError('minlength')">
-      Min Length is 3
-    </mat-error>
-  </mat-form-field>
-  <!-- Room Type -->
-
-  <div>
-    <mat-label>Room Type </mat-label>
-    <mat-radio-group formControlName="type">
-      <mat-radio-button value="common">Common</mat-radio-button>
-      <mat-radio-button value="deluxe">Deluxe</mat-radio-button>
-      <mat-error *ngIf="addRoomForm.get('type')?.hasError('required')">
+<div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
+  <form
+    [formGroup]="addRoomForm"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit(formDirective)"
+  >
+    <h1 class="text-center">Add Room</h1>
+    <!-- Room Number -->
+    <mat-form-field class="form-field">
+      <mat-label>Room Number</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="number"
+        placeholder="Enter Room Number"
+      />
+      <!-- Clear btn -->
+      <button
+        tabindex="-1"
+        *ngIf="
+          addRoomForm.controls['number'].value != '' &&
+          addRoomForm.controls['extras'].value != null
+        "
+        (click)="clearValue('number')"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <!-- Errors/validators -->
+      <mat-error *ngIf="addRoomForm.get('number')?.hasError('required')">
         Field is Required
       </mat-error>
-    </mat-radio-group>
-  </div>
+      <mat-error *ngIf="addRoomForm.get('number')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <!-- Room Type -->
 
-  <!-- Room Price -->
-  <mat-form-field class="form-field">
-    <mat-label>Room Price</mat-label>
+    <div>
+      <mat-label>Room Type </mat-label>
+      <mat-radio-group formControlName="type">
+        <mat-radio-button value="common">Common</mat-radio-button>
+        <mat-radio-button value="deluxe">Deluxe</mat-radio-button>
+        <mat-error *ngIf="addRoomForm.get('type')?.hasError('required')">
+          Field is Required
+        </mat-error>
+      </mat-radio-group>
+    </div>
 
-    <input
-      type="number"
-      matInput
-      formControlName="price"
-      placeholder="Enter Room Price"
-    />
-    <mat-error *ngIf="addRoomForm.get('price')?.hasError('required')">
-      Field is Required
-    </mat-error>
-  </mat-form-field>
-  <!-- Room Extras -->
-  <mat-form-field class="form-field">
-    <mat-label>Room Extras</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="extras"
-      placeholder="Enter Room Extras"
-    />
-    <mat-error *ngIf="addRoomForm.get('extras')?.hasError('required')">
-      Field is Required
-    </mat-error>
-  </mat-form-field>
-  <!-- Submit Button -->
-  <div>
-    <button [disabled]="addRoomForm.invalid" mat-button color="primary">
-      Add Room
-    </button>
-  </div>
-  <div *ngIf="roomAddedFailed" class="alert alert-danger" role="alert">
-    Adding Room failed: {{ errorMessage }}
-  </div>
-</form>
+    <!-- Room Price -->
+    <mat-form-field class="form-field">
+      <mat-label>Room Price</mat-label>
 
-<div class="alert alert-success" *ngIf="roomAdded">Room Added!</div>
+      <input
+        type="number"
+        matInput
+        formControlName="price"
+        placeholder="Enter Room Price"
+      />
+      <!-- Clear btn -->
+      <button
+        tabindex="-1"
+        *ngIf="
+          addRoomForm.controls['price'].value != '' &&
+          addRoomForm.controls['extras'].value != null
+        "
+        (click)="clearValue('price')"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <!-- Errors/validators -->
+      <mat-error *ngIf="addRoomForm.get('price')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+    <!-- Room Extras -->
+    <mat-form-field class="form-field">
+      <mat-label>Room Extras</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="extras"
+        placeholder="Enter Room Extras"
+      />
+      <!-- Clear btn -->
+      <button
+        tabindex="-1"
+        *ngIf="
+          addRoomForm.controls['extras'].value != '' &&
+          addRoomForm.controls['extras'].value != null
+        "
+        (click)="clearValue('extras')"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <!-- Errors/validators -->
+      <mat-error *ngIf="addRoomForm.get('extras')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button [disabled]="addRoomForm.invalid" mat-button color="primary">
+        Add Room
+      </button>
+    </div>
+    <div *ngIf="roomAddedFailed" class="alert alert-danger" role="alert">
+      Adding Room failed: {{ errorMessage }}
+    </div>
+    <div class="alert alert-success" *ngIf="roomAdded">Room Added!</div>
+  </form>
+</div>

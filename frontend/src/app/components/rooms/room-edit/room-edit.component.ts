@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RoomService } from '../services/room.service';
 import { Room } from 'src/app/models/room.model';
@@ -19,6 +19,7 @@ export class RoomEditComponent implements OnInit {
   updateRoomForm!: FormGroup;
   errorMessage = '';
   roomUpdateFailed = false;
+  @Output() updatedEvent = new EventEmitter<string>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private room: Room,
@@ -81,10 +82,16 @@ export class RoomEditComponent implements OnInit {
           ? res.message
           : 'This Room was updated successfully!';
 
-
-
+      },complete:()=>{
+        console.log("Room updates->refresh")
+        this.updatedItem();
       },
       error: (e) => console.error(e),
     });
+
+
+  }
+  updatedItem() {
+    this.updatedEvent.emit();
   }
 }

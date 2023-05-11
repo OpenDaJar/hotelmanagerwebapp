@@ -1,6 +1,10 @@
-<div *ngIf="!isLoggedIn">
-  {{ loginForm.value | json }}
+<div
+  *ngIf="!isLoggedIn"
+  class="h-100 d-flex align-items-center justify-content-center mt-auto p-5"
+>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1 class="text-center">Login</h1>
+    <!-- Username -->
     <mat-form-field class="form-field">
       <mat-label>Username</mat-label>
       <input
@@ -9,6 +13,18 @@
         formControlName="username"
         placeholder="Enter Username"
       />
+      <button
+        tabindex="-1"
+        *ngIf="loginForm.controls['username'].value != ''"
+        (click)="clearValue('username')"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+
       <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
         Field is Required
       </mat-error>
@@ -16,6 +32,7 @@
         Min Length is 3
       </mat-error>
     </mat-form-field>
+    <!-- Password -->
     <mat-form-field class="form-field">
       <mat-label>Password</mat-label>
       <input
@@ -24,6 +41,17 @@
         formControlName="password"
         placeholder="Enter Password"
       />
+      <button
+        tabindex="-1"
+        *ngIf="loginForm.controls['password'].value != ''"
+        (click)="clearValue('password')"
+        matSuffix
+        type="button"
+        mat-icon-button
+        aria-label="Clear"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
       <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
         Field is Required
       </mat-error>

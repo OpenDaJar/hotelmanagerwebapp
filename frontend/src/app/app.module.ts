@@ -19,7 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BsDropdownModule
+    BsDropdownModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

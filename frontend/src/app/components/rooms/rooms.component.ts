@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Room } from '../../models/room.model';
 import { RoomService } from './services/room.service';
-import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RoomEditComponent } from './room-edit/room-edit.component';
 import { RoomDeleteComponent } from './room-delete/room-delete.component';
 
@@ -11,12 +11,20 @@ import { RoomDeleteComponent } from './room-delete/room-delete.component';
   styleUrls: ['./rooms.component.scss'],
 })
 export class RoomsComponent implements OnInit {
-  rooms: Room[]=[{}];
+  rooms: Room[] = [{}];
   room: Room = {};
   message = '';
-  tableCols?: string[] = ['number', 'type', 'price', 'extras', 'available','edit','delete'];
+  tableCols?: string[] = [
+    'number',
+    'type',
+    'price',
+    'extras',
+    'available',
+    'edit',
+    'delete',
+  ];
 
-  constructor(private roomService: RoomService, private dialog:MatDialog) {}
+  constructor(private roomService: RoomService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.retrieveAllRooms();
@@ -38,32 +46,37 @@ export class RoomsComponent implements OnInit {
         this.room = data;
         // console.log(data);
       },
-      complete:()=>{
-        console.log("Retrieve Room: ",this.room)
+      complete: () => {
+        console.log('Retrieve Room: ', this.room);
         this.dialog.open(RoomEditComponent, {
           data: this.room,
-        })
+        });
+        this.dialog.afterAllClosed.subscribe(() => {
+          this.retrieveAllRooms();
+        });
       },
       error: (e) => console.log(e),
     });
   }
 
-
-  clickedRow(row:Room):void{
+  clickedRow(row: Room): void {
     // console.log(row);
   }
 
   //Edit Button
-  clickedEdit(id:any):void{
-    console.log("clicked Edit",id);
+  clickedEdit(id: any): void {
+    console.log('clicked Edit', id);
     this.retrieveRoom(id);
   }
 
   //delete room
-  clickedRemove(id:any):void{
-    console.log("clicked Remove",id)
+  clickedRemove(id: any): void {
+    console.log('clicked Remove', id);
     this.dialog.open(RoomDeleteComponent, {
-      data: id
-    })
+      data: id,
+    });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.retrieveAllRooms();
+    });
   }
 }
