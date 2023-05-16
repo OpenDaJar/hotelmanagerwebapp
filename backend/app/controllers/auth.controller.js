@@ -6,6 +6,21 @@ const User = db.user;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+exports.firstUser =async()=>{
+  try {
+    const user = await User.create({
+      username:"admin",
+      email:"admin@admin.com",
+      password: bcrypt.hashSync("123456", 8),
+      role:"admin"
+    })
+    if (user) console.log("First user created");
+    
+  } catch (error) {
+    console.log("First user signup failed:" ,error.message)
+  }
+}
+
 exports.signup = async (req, res) => {
   // Save User to Database
   try {
