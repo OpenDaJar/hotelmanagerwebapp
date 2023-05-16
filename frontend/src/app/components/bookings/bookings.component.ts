@@ -28,7 +28,7 @@ import { BookingDeleteComponent } from './booking-delete/booking-delete.componen
   ],
 })
 export class BookingsComponent implements OnInit, AfterViewInit {
-  bookings!: BookRoom[];
+  bookings: BookRoom[] =[];
   rooms: Room[] = [];
   room: Room = {};
   testArray = [{}];

@@ -31,13 +31,13 @@ const firstRun = require("./app/controllers/auth.controller");
 
 //Resync DB
 db.sequelize
-  // force=true to drop and resync
+    // force=true to drop and resync
   // .sync({ force: true })
   // .then(()=>{
   //   console.log("First run");
   //   firstRun.firstUser()
   // })
-  //sync  normaly
+    //sync  normaly
   .sync()
   .then(() => {
     console.log(" Resync Db");

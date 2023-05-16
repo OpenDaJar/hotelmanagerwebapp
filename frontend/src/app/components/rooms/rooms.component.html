@@ -1,7 +1,9 @@
-<button mat-raised-button color="primary" (click)="retrieveAllRooms()">
+
+<button  mat-raised-button color="primary" (click)="retrieveAllRooms()">
   Refresh Rooms
 </button>
-<table mat-table [dataSource]="rooms" class="mat-elevation-z8 demo-table">
+<h1 *ngIf="rooms.length===0">No rooms available</h1>
+<table *ngIf="rooms.length!=0" mat-table [dataSource]="rooms" class="mat-elevation-z8 demo-table">
   <!-- Number Column -->
   <ng-container matColumnDef="number">
     <th mat-header-cell *matHeaderCellDef>No.</th>
