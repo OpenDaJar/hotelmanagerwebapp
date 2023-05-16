@@ -49,9 +49,12 @@ app.get("/", (req, res) => {
 require("./app/routes/auth.routes")(app);
 require("./app/routes/room.routes")(app);
 require("./app/routes/booking.routes")(app);
+require("dotenv").config();
 
 // set port, listen for requestss
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
