@@ -9,6 +9,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BookRoom } from 'src/app/models/book-room.model';
 import { Room } from 'src/app/models/room.model';
 import { BookingssService } from './services/bookingss.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingDeleteComponent } from './booking-delete/booking-delete.component';
 
 @Component({
   selector: 'app-bookings',
@@ -37,11 +39,15 @@ export class BookingsComponent implements OnInit, AfterViewInit {
     'price',
     'checkin',
     'checkout',
+    'delete',
   ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: Room | null;
 
-  constructor(private bookingService: BookingssService) {}
+  constructor(
+    private bookingService: BookingssService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.retrieveAllBookings();
@@ -100,5 +106,15 @@ export class BookingsComponent implements OnInit, AfterViewInit {
   test(id: any) {
     console.log('test', id);
     this.getRoom(id.roomId);
+  }
+
+  clickedRemove(id: number): void {
+    console.log('Clicked Remove booking with ID:', id);
+    this.dialog.open(BookingDeleteComponent, {
+      data: id,
+    });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.retrieveAllBookings();
+    });
   }
 }

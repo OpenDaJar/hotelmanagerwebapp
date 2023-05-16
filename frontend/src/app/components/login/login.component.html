@@ -59,8 +59,8 @@
         Min Length is 3
       </mat-error>
     </mat-form-field>
-
-    <div>
+    <!-- Login btn -->
+    <div class="text-center">
       <button [disabled]="loginForm.invalid" mat-button color="primary">
         Login
       </button>
@@ -71,5 +71,5 @@
   </form>
 </div>
 <div class="alert alert-success" *ngIf="isLoggedIn">
-  Logged in as {{ roles }}.
+  Logged in as {{ role }}.
 </div>

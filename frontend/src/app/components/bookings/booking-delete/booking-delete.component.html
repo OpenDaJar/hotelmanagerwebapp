@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Do you want to delete Booking with id: {{ bookingId }}</h1>
+<mat-dialog-content>
+  <mat-dialog-actions>
+    <div>
+      <button
+        [mat-dialog-close]="true"
+        mat-button
+        color="primary"
+        (click)="deleteBooking()"
+      >
+        Delete Booking
+      </button>
+    </div>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

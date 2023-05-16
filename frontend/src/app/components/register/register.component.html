@@ -1,7 +1,8 @@
 
-  <div class="">
-  {{ registerForm.value | json }}
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" >
+    <h1 class="text-center">Register User</h1>
+    <!-- Username -->
     <mat-form-field class="form-field">
       <mat-label>Username</mat-label>
       <input
@@ -16,6 +17,7 @@
       <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">
         Min Length is 3
       </mat-error>
+      <!-- Email -->
     </mat-form-field>
     <mat-form-field class="form-field">
       <mat-label>Email</mat-label>
@@ -31,6 +33,7 @@
       <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
         Enter valid email
       </mat-error>
+      <!-- Password -->
     </mat-form-field>
     <mat-form-field class="form-field">
       <mat-label>Password</mat-label>
@@ -47,6 +50,7 @@
         Min Length is 3
       </mat-error>
     </mat-form-field>
+    <!-- Repeat Password -->
     <mat-form-field class="form-field">
       <mat-label>Repeat Password</mat-label>
       <input
@@ -61,11 +65,12 @@
       <mat-error *ngIf="registerForm.get('rePassword')?.hasError('matching')">
         Passwords must match
       </mat-error>
-    </mat-form-field>
+    </mat-form-field >
+    <!-- User Role -->
     <mat-label>Pick Role</mat-label>
     <mat-radio-group
       aria-labelledby="radio-group-label"
-      class="radio-group"
+      class="radio-group "
       formControlName="userRole"
     >
       <mat-radio-button
@@ -79,7 +84,8 @@
         Role is Required
       </mat-error>
     </mat-radio-group>
-    <div>
+    <!-- Register -->
+    <div class="text-center">
       <button [disabled]="registerForm.invalid" mat-button color="primary">
         Register
       </button>
