@@ -11,7 +11,7 @@ import { RoomDeleteComponent } from './room-delete/room-delete.component';
   styleUrls: ['./rooms.component.scss'],
 })
 export class RoomsComponent implements OnInit {
-  rooms: Room[] = [{}];
+  rooms: Room[] = [];
   room: Room = {};
   message = '';
   tableCols?: string[] = [

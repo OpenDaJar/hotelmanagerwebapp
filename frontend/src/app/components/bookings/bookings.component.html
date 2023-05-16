@@ -1,4 +1,6 @@
+<h1 *ngIf="bookings.length===0">No Bookings available</h1>
 <table
+*ngIf="bookings.length!=0"
   mat-table
   [dataSource]="bookings"
   multiTemplateDataRows
