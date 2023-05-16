@@ -1,7 +1,6 @@
 TODO
 Backend --done
 Frontend
-  bookings -> update/del
   beautify ui
     Login
     add room

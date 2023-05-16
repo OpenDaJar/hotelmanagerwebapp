@@ -62,6 +62,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthguardGuard],
   },
+  { path: '',   redirectTo: '/rooms', pathMatch: 'full' },
 ];
 
 @NgModule({

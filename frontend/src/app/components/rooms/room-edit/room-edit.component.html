@@ -1,70 +1,75 @@
-<form [formGroup]="updateRoomForm" (ngSubmit)="onSubmit()">
-  <mat-form-field class="form-field">
-    <mat-label>Room Number</mat-label>
-    <input type="text" matInput formControlName="number" />
-    <mat-error *ngIf="updateRoomForm.get('number')?.hasError('required')">
-      Field is Required
-    </mat-error>
-    <mat-error *ngIf="updateRoomForm.get('number')?.hasError('minlength')">
-      Min Length is 3
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Room Type</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="type"
-      placeholder="Enter Room Type"
-    />
-    <mat-error *ngIf="updateRoomForm.get('type')?.hasError('required')">
-      Field is Required
-    </mat-error>
-    <mat-error *ngIf="updateRoomForm.get('type')?.hasError('minlength')">
-      Min Length is 3
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Room Price</mat-label>
+<div class="h-100 d-flex align-items-center justify-content-center mt-auto p-3">
 
-    <input
-      type="number"
-      matInput
-      formControlName="price"
-      placeholder="Enter Room Price"
-    />
-    <mat-error *ngIf="updateRoomForm.get('price')?.hasError('required')">
-      Field is Required
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Room Extras</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="extras"
-      placeholder="Enter Room Extras"
-    />
-    <mat-error *ngIf="updateRoomForm.get('extras')?.hasError('required')">
-      Field is Required
-    </mat-error>
-  </mat-form-field>
-  <mat-dialog-actions>
-    <div>
-      <button
-        [disabled]="updateRoomForm.invalid"
-        type="submit"
-        [mat-dialog-close]="true"
-        mat-button
-        color="primary"
-      >
-        Update Room
-      </button>
+  <form [formGroup]="updateRoomForm" (ngSubmit)="onSubmit()">
+    <h1 class="text-center">Edit Room</h1>
+    <mat-form-field class="form-field">
+      <mat-label>Room Number</mat-label>
+      <input type="text" matInput formControlName="number" />
+      <mat-error *ngIf="updateRoomForm.get('number')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="updateRoomForm.get('number')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Room Type</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="type"
+        placeholder="Enter Room Type"
+      />
+      <mat-error *ngIf="updateRoomForm.get('type')?.hasError('required')">
+        Field is Required
+      </mat-error>
+      <mat-error *ngIf="updateRoomForm.get('type')?.hasError('minlength')">
+        Min Length is 3
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Room Price</mat-label>
+
+      <input
+        type="number"
+        matInput
+        formControlName="price"
+        placeholder="Enter Room Price"
+      />
+      <mat-error *ngIf="updateRoomForm.get('price')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Room Extras</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="extras"
+        placeholder="Enter Room Extras"
+      />
+      <mat-error *ngIf="updateRoomForm.get('extras')?.hasError('required')">
+        Field is Required
+      </mat-error>
+    </mat-form-field>
+    <mat-dialog-actions>
+      <div>
+        <button
+          [disabled]="updateRoomForm.invalid"
+          type="submit"
+          [mat-dialog-close]="true"
+          mat-button
+          color="primary"
+        >
+          Update Room
+        </button>
+      </div>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+
+    <div *ngIf="roomUpdateFailed" class="alert alert-danger" role="alert">
+      Update Room failed: {{ errorMessage }}
     </div>
-    <button mat-button mat-dialog-close>Cancel</button>
-  </mat-dialog-actions>
+  </form>
 
-  <div *ngIf="roomUpdateFailed" class="alert alert-danger" role="alert">
-    Update Room failed: {{ errorMessage }}
-  </div>
-</form>
+</div>
