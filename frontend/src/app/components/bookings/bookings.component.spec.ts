@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookingsComponent } from './bookings.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('BookingsComponent', () => {
   let component: BookingsComponent;
@@ -8,9 +10,10 @@ describe('BookingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookingsComponent ]
-    })
-    .compileComponents();
+      providers: [{ provide: MatDialog, useValue: {} }],
+      imports: [HttpClientTestingModule],
+      declarations: [BookingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BookingsComponent);
     component = fixture.componentInstance;

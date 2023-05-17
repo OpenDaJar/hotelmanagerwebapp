@@ -9,11 +9,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatIconModule} from '@angular/material/icon';
+import { UploadImageComponent } from './upload-image/upload-image.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 @NgModule({
   declarations: [
-    AddRoomComponent
+    AddRoomComponent,
+    UploadImageComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,11 @@ import {MatIconModule} from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatProgressBarModule
   ]
 })
 export class AddRoomModule { }

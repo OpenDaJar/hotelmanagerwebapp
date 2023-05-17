@@ -40,7 +40,7 @@ db.sequelize
     //sync  normaly
   .sync()
   .then(() => {
-    console.log(" Resync Db");
+    console.log(" Resync Db!");
   })
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);

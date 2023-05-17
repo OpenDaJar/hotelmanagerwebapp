@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormGroupDirective,
   Validators,
 } from '@angular/forms';
 import { BookRoom } from 'src/app/models/book-room.model';
@@ -42,7 +43,7 @@ export class AddBookingComponent implements OnInit {
 
   //Get Rooms with "type"
   retrieveRoomsByType(): void {
-    console.log('called');
+
     const type = this.addBookingForm.get('roomType')?.value;
     if (type != '') {
       this.roomService.getRoomByType(type).subscribe({
@@ -89,7 +90,7 @@ export class AddBookingComponent implements OnInit {
   }
 
   //submit data and refresh page when done
-  onSubmit(): void {
+  onSubmit(formDirective: FormGroupDirective): void {
     this.bookingPriceCalc();
 
     const checkin = this.addBookingForm
@@ -122,7 +123,12 @@ export class AddBookingComponent implements OnInit {
         this.bookingAdded = true;
       },
       complete: () => {
-        this.refreshPage();
+        formDirective.resetForm();
+        this.addBookingForm.reset();
+        this.displayRooms =false;
+        this.displaySelected = false;
+        this.bookingPrice = 0;
+        // this.refreshPage();
       },
       error: (e) => {
         console.log(e);
@@ -156,21 +162,24 @@ export class AddBookingComponent implements OnInit {
 
   //booking price calculator
   bookingPriceCalc(): void {
-    let roomRate = this.selectedRoom?.price;
-    if (roomRate == undefined) roomRate = 0;
+    if(this.addBookingForm.get('checkout')?.value && this.addBookingForm.get('checkin')?.value){
+      let roomRate = this.selectedRoom?.price;
+      if (roomRate == undefined) roomRate = 0;
 
-    let days =
-      (this.addBookingForm.get('checkout')?.value.toDate() -
-        this.addBookingForm.get('checkin')?.value.toDate()) /
-      (24 * 60 * 60 * 1000);
-    if (days == undefined) days = 0;
+      let days =
+        (this.addBookingForm.get('checkout')?.value.toDate() -
+          this.addBookingForm.get('checkin')?.value.toDate()) /
+        (24 * 60 * 60 * 1000);
+      if (days == undefined) days = 0;
 
-    let price = 0;
-    if (roomRate != undefined) {
-      price = roomRate * days;
+      let price = 0;
+      if (roomRate != undefined) {
+        price = roomRate * days;
+      }
+
+      console.log(`Room RAte: ${roomRate}, Days: ${days}, total:${price}`);
+      this.bookingPrice = price;
     }
 
-    console.log(`Room RAte: ${roomRate}, Days: ${days}, total:${price}`);
-    this.bookingPrice = price;
   }
 }
