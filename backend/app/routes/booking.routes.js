@@ -1,3 +1,4 @@
+//api calls for booking
 const controller = require("../controllers/booking.controller");
 const { authJwt } = require("../middleware");
 

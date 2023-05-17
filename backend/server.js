@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 
 const app = express();
+global.__basedir = __dirname;
 
 app.use(
   cors({
@@ -55,6 +56,7 @@ app.get("/", (req, res) => {
 require("./app/routes/auth.routes")(app);
 require("./app/routes/room.routes")(app);
 require("./app/routes/booking.routes")(app);
+require("./app/routes/file.routes")(app);
 require("dotenv").config();
 
 // set port, listen for requestss

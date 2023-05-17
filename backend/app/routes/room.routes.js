@@ -1,4 +1,4 @@
-//GET rooms api calls
+//rooms api calls
 
 const controller = require("../controllers/room.controller");
 const { authJwt } = require("../middleware");
