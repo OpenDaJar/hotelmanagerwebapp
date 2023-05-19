@@ -4,14 +4,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Room } from '../../../models/room.model';
 
-// const API_URL = 'http://localhost:8080/api/rooms';
 const API_URL = 'http://localhost:6868/api/rooms';
+const API_URL_FILES = 'http://localhost:6868/api/files';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoomService {
-
   constructor(private http: HttpClient) {}
 
   getAllRooms(): Observable<Room[]> {
@@ -30,7 +29,11 @@ export class RoomService {
     return this.http.delete(`${API_URL}/deleteRoom/${id}`);
   }
 
-  getRoomByType(type:any):Observable<Room[]>{
+  getRoomByType(type: any): Observable<Room[]> {
     return this.http.get<Room[]>(`${API_URL}/getRoomsByType/${type}`);
+  }
+
+  getFile(name: string): Observable<any> {
+    return this.http.get(`${API_URL_FILES}/getFile/${name}`);
   }
 }

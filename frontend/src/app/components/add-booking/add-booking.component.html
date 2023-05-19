@@ -89,8 +89,12 @@
         </button>
       </div>
       <!-- Rooms selection -->
-      <div *ngIf="rooms.length!=0">
-        <table mat-table [dataSource]="rooms" class="mat-elevation-z8 demo-table">
+      <div *ngIf="rooms.length != 0">
+        <table
+          mat-table
+          [dataSource]="rooms"
+          class="mat-elevation-z8 mat-table"
+        >
           <!-- Room Number -->
           <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -116,24 +120,26 @@
         </table>
       </div>
       <!-- If there are no rooms with given type -->
-      <div *ngIf="rooms.length===0" class="text-center">
-        <h1>No rooms available with Type: {{addBookingForm.get('roomType')?.value | titlecase}}</h1>
+      <div *ngIf="rooms.length === 0" class="text-center">
+        <h1>
+          No rooms available with Type:
+          {{ addBookingForm.get("roomType")?.value | titlecase }}
+        </h1>
       </div>
-
     </div>
     <!-- Booking Price -->
     <div>
-      <h3> Booking Price {{ bookingPrice }} <button
-        type="button"
-        mat-button
-        class="btn-primary"
-        (click)="bookingPriceCalc()"
-      >
-        Calculate Price
-      </button></h3>
-
-
-
+      <h3>
+        Booking Price {{ bookingPrice }}
+        <button
+          type="button"
+          mat-button
+          class="btn-primary"
+          (click)="bookingPriceCalc()"
+        >
+          Calculate Price
+        </button>
+      </h3>
     </div>
     <!-- Booking Notes -->
     <mat-form-field class="form-field">

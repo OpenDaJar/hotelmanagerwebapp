@@ -5,4 +5,5 @@ export class Room {
   price?: number;
   extras?: string;
   available?: boolean;
+  imgURL?: string;
 }

@@ -10,11 +10,18 @@ exports.addRoom = async (req, res) => {
     return res.status(400).send({ message: "Room not Defined" });
   }
   try {
+    //no image uploaded
+    if (!req.body.imgURL)
+      return res.status(404).send({ message: "No image uploaded for Room." });
+      
+    const imgURL = "http://localhost:6868/api/files/download/" + req.body.imgURL;
+
     const room = await Room.create({
       number: req.body.number,
       type: req.body.type,
       price: req.body.price,
       extras: req.body.extras,
+      imgURL: imgURL
     });
     if (room) res.status(200).send({ message: "Room Created" });
   } catch (error) {
@@ -38,6 +45,7 @@ exports.findAll = async (req, res) => {
         price: room.price,
         extras: room.extras,
         available: room.available,
+        imgURL: room.imgURL,
       });
     });
     res.status(200).send(result);
@@ -62,6 +70,7 @@ exports.findOne = async (req, res) => {
       price: room.price,
       extras: room.extras,
       available: room.available,
+      imgURL: room.imgURL,
     };
     res.status(200).send(result);
   } catch (error) {
@@ -143,6 +152,7 @@ exports.findRoomsByType = async (req, res) => {
         price: room.price,
         extras: room.extras,
         available: room.available,
+        imgURL:room.imgURL
       });
     });
     res.status(200).send(result);

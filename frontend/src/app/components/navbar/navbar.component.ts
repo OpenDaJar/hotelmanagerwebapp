@@ -29,10 +29,6 @@ export class NavbarComponent {
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
       this.roles = user.roles;
-
-      // this.showAdminBoard = this.roles.includes('ADMIN');
-      // this.showModeratorBoard = this.roles.includes('MODERATOR');
-
       this.username = user.username;
     }
     this.eventBusSub = this.eventBusService.on('logout', () => {
@@ -40,7 +36,7 @@ export class NavbarComponent {
     });
   }
 
-  isAdmin():boolean{
+  isAdmin(): boolean {
     return this.storageService.isAdmin();
   }
 

@@ -9,10 +9,9 @@ describe('RoomDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[HttpClientTestingModule],
-      declarations: [ RoomDeleteComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule],
+      declarations: [RoomDeleteComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RoomDeleteComponent);
     component = fixture.componentInstance;

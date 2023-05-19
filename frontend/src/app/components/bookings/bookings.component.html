@@ -1,6 +1,6 @@
-<h1 *ngIf="bookings.length===0">No Bookings available</h1>
+<h1 *ngIf="bookings.length === 0">No Bookings available</h1>
 <table
-*ngIf="bookings.length!=0"
+  *ngIf="bookings.length != 0"
   mat-table
   [dataSource]="bookings"
   multiTemplateDataRows
@@ -38,13 +38,15 @@
     <th mat-header-cell *matHeaderCellDef>Checkout Date</th>
     <td mat-cell *matCellDef="let booking">{{ booking.checkout }}</td>
   </ng-container>
-    <!-- Delete Column -->
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef>Delete Booking</th>
-      <td mat-cell *matCellDef="let booking">
-        <button mat-raised-button (click)="clickedRemove(booking.id)">Delete</button>
-      </td>
-    </ng-container>
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef>Delete Booking</th>
+    <td mat-cell *matCellDef="let booking">
+      <button mat-raised-button (click)="clickedRemove(booking.id)">
+        Delete
+      </button>
+    </td>
+  </ng-container>
   <!-- Expand -->
   <ng-container matColumnDef="expand">
     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>

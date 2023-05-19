@@ -5,15 +5,17 @@ import { RoomService } from '../services/room.service';
 @Component({
   selector: 'app-room-delete',
   templateUrl: './room-delete.component.html',
-  styleUrls: ['./room-delete.component.scss']
+  styleUrls: ['./room-delete.component.scss'],
 })
 export class RoomDeleteComponent {
+  message: string = '';
+  constructor(
+    @Inject(MAT_DIALOG_DATA) protected roomID: any,
+    private roomService: RoomService
+  ) {}
 
-  message:string="";
-  constructor( @Inject(MAT_DIALOG_DATA) protected roomID:any,private roomService: RoomService,){}
-
-  deleteRoom():void{
-    console.log("DeletetingRoom")
+  deleteRoom(): void {
+    console.log('DeletetingRoom');
     this.roomService.deleteRoom(this.roomID).subscribe({
       next: (res) => {
         console.log(res);

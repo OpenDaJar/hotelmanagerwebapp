@@ -14,21 +14,8 @@ module.exports = function (app) {
   );
 
   app.get(
-    "/api/files/getListFiles",
-    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
-    controller.getListFiles
-  );
-
-  app.get(
     "/api/files/download/:name",
     [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
     controller.download
   );
-
-  app.delete(
-    "/api/files/delete/:name",
-    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
-    controller.remove
-  );
-
-}
+};

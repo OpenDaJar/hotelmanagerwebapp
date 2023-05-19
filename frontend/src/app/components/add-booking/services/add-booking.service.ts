@@ -3,19 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookRoom } from 'src/app/models/book-room.model';
 
-// const API_URL = 'http://localhost:8080/api/bookings';
 const API_URL = 'http://localhost:6868/api/bookings';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AddBookingService {
-
   constructor(private http: HttpClient) {}
 
-  createBooking(data:BookRoom): Observable<any>{
-    return this.http.post(`${API_URL}/addBooking`,data);
+  createBooking(data: BookRoom): Observable<any> {
+    return this.http.post(`${API_URL}/addBooking`, data);
   }
-
 }
-

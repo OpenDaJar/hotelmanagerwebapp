@@ -4,6 +4,7 @@ import { RoomService } from './services/room.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RoomEditComponent } from './room-edit/room-edit.component';
 import { RoomDeleteComponent } from './room-delete/room-delete.component';
+import { UploadImagesService } from '../upload-images/services/upload-images.service';
 
 @Component({
   selector: 'app-rooms',
@@ -12,9 +13,11 @@ import { RoomDeleteComponent } from './room-delete/room-delete.component';
 })
 export class RoomsComponent implements OnInit {
   rooms: Room[] = [];
+  roomPicturesUrls = [{}];
   room: Room = {};
   message = '';
   tableCols?: string[] = [
+    'picture',
     'number',
     'type',
     'price',
@@ -24,10 +27,28 @@ export class RoomsComponent implements OnInit {
     'delete',
   ];
 
-  constructor(private roomService: RoomService, private dialog: MatDialog) {}
+  constructor(
+    private roomService: RoomService,
+    private dialog: MatDialog,
+    private picService: UploadImagesService
+  ) {}
 
   ngOnInit() {
     this.retrieveAllRooms();
+  }
+
+  getPictures(): void {
+    this.rooms.forEach((room) => {
+      this.picService.getFile('room-' + room.number).subscribe({
+        next: (data) => {
+          let key: string = room.number || 'a';
+          this.roomPicturesUrls.push({
+            [key]: data.url,
+          });
+        },
+        error: (e) => console.error(e),
+      });
+    });
   }
 
   retrieveAllRooms(): void {
@@ -35,6 +56,9 @@ export class RoomsComponent implements OnInit {
       next: (data) => {
         this.rooms = data;
         console.log(this.rooms);
+      },
+      complete: () => {
+        // this.getPictures();
       },
       error: (e) => console.error(e),
     });
@@ -78,5 +102,20 @@ export class RoomsComponent implements OnInit {
     this.dialog.afterAllClosed.subscribe(() => {
       this.retrieveAllRooms();
     });
+  }
+
+  test() {
+    console.log('TEST');
+  }
+  async displayImage(roomNumber: string): Promise<string> {
+    let url = '';
+    await this.roomService.getFile(roomNumber).subscribe({
+      next: (data) => {
+        url = data;
+        console.log('URL: ', url);
+      },
+      error: (e) => console.error(e),
+    });
+    return url;
   }
 }

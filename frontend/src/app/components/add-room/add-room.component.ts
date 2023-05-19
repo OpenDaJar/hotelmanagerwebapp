@@ -20,6 +20,7 @@ export class AddRoomComponent implements OnInit {
   errorMessage = '';
   roomAdded = false;
   roomAddedFailed = false;
+  imgURL = '';
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +38,7 @@ export class AddRoomComponent implements OnInit {
       type: this.addRoomForm.get('type')?.value,
       price: this.addRoomForm.get('price')?.value,
       extras: this.addRoomForm.get('extras')?.value,
+      imgURL: this.imgURL,
     };
     this.addRoomService.createRoom(this.room).subscribe({
       next: (res) => {
@@ -45,9 +47,10 @@ export class AddRoomComponent implements OnInit {
       },
       complete: () => {
         //reset form and errors
-        formDirective.resetForm();
-        this.addRoomForm.reset();
-        console.log(this.addRoomForm.value)
+        console.log('Room Added');
+        // formDirective.resetForm();
+        // this.addRoomForm.reset();
+        setTimeout(this.reloadPage, 500);
       },
       error: (e) => {
         console.error(e);
@@ -79,5 +82,13 @@ export class AddRoomComponent implements OnInit {
 
   clearValue(key: string): void {
     this.addRoomForm.controls[key].setValue('');
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+  getImageURL(imgURLEvent: string) {
+    this.imgURL = imgURLEvent;
   }
 }

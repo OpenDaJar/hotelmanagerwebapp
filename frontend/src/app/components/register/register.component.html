@@ -1,6 +1,5 @@
-
 <div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" >
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <h1 class="text-center">Register User</h1>
     <!-- Username -->
     <mat-form-field class="form-field">
@@ -65,12 +64,12 @@
       <mat-error *ngIf="registerForm.get('rePassword')?.hasError('matching')">
         Passwords must match
       </mat-error>
-    </mat-form-field >
+    </mat-form-field>
     <!-- User Role -->
     <mat-label>Pick Role</mat-label>
     <mat-radio-group
       aria-labelledby="radio-group-label"
-      class="radio-group "
+      class="radio-group"
       formControlName="userRole"
     >
       <mat-radio-button
@@ -97,5 +96,4 @@
       Your registration is successful!
     </div>
   </form>
-
 </div>

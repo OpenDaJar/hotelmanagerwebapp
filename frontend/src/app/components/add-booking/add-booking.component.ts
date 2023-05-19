@@ -43,7 +43,6 @@ export class AddBookingComponent implements OnInit {
 
   //Get Rooms with "type"
   retrieveRoomsByType(): void {
-
     const type = this.addBookingForm.get('roomType')?.value;
     if (type != '') {
       this.roomService.getRoomByType(type).subscribe({
@@ -78,10 +77,6 @@ export class AddBookingComponent implements OnInit {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
-      // price: new FormControl({value:0, disabled: true}, {
-      //   validators: [Validators.required],
-      //   updateOn: 'blur',
-      // }),
       notes: new FormControl('', {
         validators: [Validators.required],
         updateOn: 'blur',
@@ -101,12 +96,6 @@ export class AddBookingComponent implements OnInit {
       .get('checkout')
       ?.value.toDate()
       .toLocaleDateString();
-
-    // const date = this.addBookingForm.get("checkin")?.value.toDate()
-    // const dateSp= String(date).split(" ", 4)
-    // dateSp.shift()
-    // console.log("DATE:",  dateSp.join(" ") )
-
     this.booking = {
       clientName: this.addBookingForm.get('clientName')?.value,
       checkin: checkin,
@@ -125,7 +114,7 @@ export class AddBookingComponent implements OnInit {
       complete: () => {
         formDirective.resetForm();
         this.addBookingForm.reset();
-        this.displayRooms =false;
+        this.displayRooms = false;
         this.displaySelected = false;
         this.bookingPrice = 0;
         // this.refreshPage();
@@ -162,7 +151,10 @@ export class AddBookingComponent implements OnInit {
 
   //booking price calculator
   bookingPriceCalc(): void {
-    if(this.addBookingForm.get('checkout')?.value && this.addBookingForm.get('checkin')?.value){
+    if (
+      this.addBookingForm.get('checkout')?.value &&
+      this.addBookingForm.get('checkin')?.value
+    ) {
       let roomRate = this.selectedRoom?.price;
       if (roomRate == undefined) roomRate = 0;
 
@@ -177,9 +169,8 @@ export class AddBookingComponent implements OnInit {
         price = roomRate * days;
       }
 
-      console.log(`Room RAte: ${roomRate}, Days: ${days}, total:${price}`);
+      console.log(`Room Rate: ${roomRate}, Days: ${days}, total:${price}`);
       this.bookingPrice = price;
     }
-
   }
 }

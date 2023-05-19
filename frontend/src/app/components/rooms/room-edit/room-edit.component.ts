@@ -81,15 +81,13 @@ export class RoomEditComponent implements OnInit {
         this.message = res.message
           ? res.message
           : 'This Room was updated successfully!';
-
-      },complete:()=>{
-        console.log("Room updates->refresh")
+      },
+      complete: () => {
+        console.log('Room updates->refresh');
         this.updatedItem();
       },
       error: (e) => console.error(e),
     });
-
-
   }
   updatedItem() {
     this.updatedEvent.emit();

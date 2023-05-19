@@ -43,8 +43,12 @@
     <div>
       <mat-label>Room Type </mat-label>
       <mat-radio-group formControlName="type">
-        <mat-radio-button color="primary" value="common">Common</mat-radio-button>
-        <mat-radio-button color="primary" value="deluxe">Deluxe</mat-radio-button>
+        <mat-radio-button color="primary" value="common">
+          Common
+        </mat-radio-button>
+        <mat-radio-button color="primary" value="deluxe">
+          Deluxe
+        </mat-radio-button>
         <mat-error *ngIf="addRoomForm.get('type')?.hasError('required')">
           Field is Required
         </mat-error>
@@ -111,7 +115,10 @@
       </mat-error>
     </mat-form-field>
     <!-- Upload image -->
-    <app-upload-image></app-upload-image>
+    <app-upload-images
+      (picURLEvent)="getImageURL($event)"
+      [roomName]="addRoomForm.get('number')?.value"
+    ></app-upload-images>
     <!-- Submit Button -->
     <div class="text-center">
       <button [disabled]="addRoomForm.invalid" mat-button color="primary">

@@ -8,15 +8,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import {MatSelectModule} from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatMomentDateModule,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [
-    AddBookingComponent
-  ],
+  declarations: [AddBookingComponent],
   imports: [
     CommonModule,
     AddBookingRoutingModule,
@@ -27,11 +27,10 @@ import {MatSelectModule} from '@angular/material/select';
     MatDatepickerModule,
     MatSelectModule,
     MatTableModule,
-    // MatNativeDateModule
-    MatMomentDateModule
+    MatMomentDateModule,
   ],
   providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-  ]
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+  ],
 })
-export class AddBookingModule { }
+export class AddBookingModule {}

@@ -4,9 +4,6 @@ import { Observable } from 'rxjs';
 import { BookRoom } from 'src/app/models/book-room.model';
 import { Room } from 'src/app/models/room.model';
 
-// const API_URL_ROOMS = 'http://localhost:8080/api/rooms';
-// const API_URL_BOOKINGS = 'http://localhost:8080/api/bookings';
-
 const API_URL_ROOMS = 'http://localhost:6868/api/rooms';
 const API_URL_BOOKINGS = 'http://localhost:6868/api/bookings';
 

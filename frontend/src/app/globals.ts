@@ -1,2 +1,2 @@
-export const roomTypes = ["deluxe", "common"]
-export const roles = ["admin", "moderator"]
+export const roomTypes = ['deluxe', 'common'];
+export const roles = ['admin', 'moderator'];

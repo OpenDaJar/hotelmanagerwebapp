@@ -8,14 +8,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/login/login.module').then((m) => m.LoginModule),
   },
-  // {
-  //   path: 'admin',
-  //   loadChildren: () =>
-  //     import('./components/board-admin/board-admin.module').then(
-  //       (m) => m.BoardAdminModule
-  //     ),
-  //   canActivate: [AuthguardGuard],
-  // },
   {
     path: 'register',
     loadChildren: () =>
@@ -62,7 +54,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthguardGuard],
   },
-  { path: '',   redirectTo: '/rooms', pathMatch: 'full' },
+  { path: '', redirectTo: '/rooms', pathMatch: 'full' },
 ];
 
 @NgModule({

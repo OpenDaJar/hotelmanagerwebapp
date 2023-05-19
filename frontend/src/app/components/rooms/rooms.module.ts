@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RoomDeleteComponent } from './room-delete/room-delete.component';
+import { UploadImagesModule } from '../upload-images/upload-images.module';
 
 @NgModule({
   declarations: [RoomsComponent, RoomEditComponent, RoomDeleteComponent],
@@ -23,6 +24,7 @@ import { RoomDeleteComponent } from './room-delete/room-delete.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    UploadImagesModule,
   ],
 })
 export class RoomsModule {}

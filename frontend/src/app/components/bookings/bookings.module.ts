@@ -19,6 +19,6 @@ import { BookingDeleteComponent } from './booking-delete/booking-delete.componen
     MatIconModule,
     MatDialogModule,
   ],
-  providers:[]
+  providers: [],
 })
 export class BookingsModule {}
