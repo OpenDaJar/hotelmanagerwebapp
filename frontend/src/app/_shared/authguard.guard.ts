@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanActivateChild,
   Router,
   RouterStateSnapshot,
   UrlTree,
@@ -13,7 +12,7 @@ import { StorageService } from '../_services/storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthguardGuard implements CanActivate, CanActivateChild {
+export class AuthguardGuard implements CanActivate {
   constructor(private storage: StorageService, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -26,15 +25,5 @@ export class AuthguardGuard implements CanActivate, CanActivateChild {
     if (this.storage.isLoggedIn()) return true;
     this.router.navigate(['/login']);
     return false;
-  }
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
   }
 }

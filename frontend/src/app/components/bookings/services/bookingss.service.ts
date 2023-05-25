@@ -21,10 +21,6 @@ export class BookingssService {
     return this.http.get<Room>(`${API_URL_ROOMS}/getRoom/${id}`);
   }
 
-  updateBooking(id: any, data: any): Observable<any> {
-    return this.http.put(`${API_URL_BOOKINGS}/updateBooking/${id}`, data);
-  }
-
   deleteBooking(id: number): Observable<any> {
     return this.http.delete(`${API_URL_BOOKINGS}/deleteBooking/${id}`);
   }

@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
   const AUTH_API = 'http://localhost:6868/api/auth/';
   let authService: AuthService;
   let httpClient: HttpClient;
@@ -77,13 +77,13 @@ fdescribe('AuthService', () => {
   });
 
   it('signout API', () => {
-    const testMsg = {"message": "You've been signed out!"}
-    authService.logout().subscribe((data)=>{
-      expect(data).toEqual(testMsg)
-    })
+    const testMsg = { message: "You've been signed out!" };
+    authService.logout().subscribe((data) => {
+      expect(data).toEqual(testMsg);
+    });
     const req = httpTestingController.expectOne(AUTH_API + 'signout');
     expect(req.request.method).toEqual('POST');
     req.flush(testMsg);
-    httpTestingController.verify()
+    httpTestingController.verify();
   });
 });
