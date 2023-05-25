@@ -23,11 +23,11 @@ export class UploadImagesService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${API_URL}/getListFiles`);
-  }
+  // getFiles(): Observable<any> {
+  //   return this.http.get(`${API_URL}/getListFiles`);
+  // }
 
-  getFile(name: string): Observable<any> {
-    return this.http.get(`${API_URL}/getFile/${name}`);
-  }
+  // getFile(name: string): Observable<any> {
+  //   return this.http.get(`${API_URL}/getFile/${name}`);
+  // }
 }

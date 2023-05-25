@@ -33,7 +33,7 @@ export class RoomService {
     return this.http.get<Room[]>(`${API_URL}/getRoomsByType/${type}`);
   }
 
-  getFile(name: string): Observable<any> {
-    return this.http.get(`${API_URL_FILES}/getFile/${name}`);
-  }
+  // getFile(name: string): Observable<any> {
+  //   return this.http.get(`${API_URL_FILES}/getFile/${name}`);
+  // }
 }

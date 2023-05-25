@@ -23,7 +23,7 @@ export class UploadImagesComponent implements OnInit {
   constructor(private uploadService: UploadImagesService) {}
 
   ngOnInit(): void {
-    this.imageInfos = this.uploadService.getFiles();
+    // this.imageInfos = this.uploadService.getFiles();
   }
 
   selectFiles(event: any): void {
@@ -76,7 +76,7 @@ export class UploadImagesComponent implements OnInit {
           } else if (event instanceof HttpResponse) {
             const msg = file.name + ': Successful!';
             this.message.push(msg);
-            this.imageInfos = this.uploadService.getFiles();
+            // this.imageInfos = this.uploadService.getFiles();
           }
         },
         (err: any) => {

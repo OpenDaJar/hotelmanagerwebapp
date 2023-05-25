@@ -10,9 +10,9 @@ describe('BookingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [{ provide: MatDialog, useValue: {} }],
-      imports: [HttpClientTestingModule],
       declarations: [BookingsComponent],
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: MatDialog, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BookingsComponent);

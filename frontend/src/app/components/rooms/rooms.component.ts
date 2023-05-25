@@ -37,28 +37,27 @@ export class RoomsComponent implements OnInit {
     this.retrieveAllRooms();
   }
 
-  getPictures(): void {
-    this.rooms.forEach((room) => {
-      this.picService.getFile('room-' + room.number).subscribe({
-        next: (data) => {
-          let key: string = room.number || 'a';
-          this.roomPicturesUrls.push({
-            [key]: data.url,
-          });
-        },
-        error: (e) => console.error(e),
-      });
-    });
-  }
+  // getPictures(): void {
+  //   this.rooms.forEach((room) => {
+  //     this.picService.getFile('room-' + room.number).subscribe({
+  //       next: (data) => {
+  //         let key: string = room.number || 'a';
+  //         this.roomPicturesUrls.push({
+  //           [key]: data.url,
+  //         });
+  //       },
+  //       error: (e) => console.error(e),
+  //     });
+  //   });
+  // }
 
   retrieveAllRooms(): void {
     this.roomService.getAllRooms().subscribe({
       next: (data) => {
         this.rooms = data;
-        console.log(this.rooms);
       },
       complete: () => {
-        // this.getPictures();
+        // console.log('Rooms:', this.rooms);
       },
       error: (e) => console.error(e),
     });
@@ -104,18 +103,15 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  test() {
-    console.log('TEST');
-  }
-  async displayImage(roomNumber: string): Promise<string> {
-    let url = '';
-    await this.roomService.getFile(roomNumber).subscribe({
-      next: (data) => {
-        url = data;
-        console.log('URL: ', url);
-      },
-      error: (e) => console.error(e),
-    });
-    return url;
-  }
+  // async displayImage(roomNumber: string): Promise<string> {
+  //   let url = '';
+  //   await this.roomService.getFile(roomNumber).subscribe({
+  //     next: (data) => {
+  //       url = data;
+  //       console.log('URL: ', url);
+  //     },
+  //     error: (e) => console.error(e),
+  //   });
+  //   return url;
+  // }
 }

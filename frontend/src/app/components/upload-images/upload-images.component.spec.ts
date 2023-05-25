@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UploadImagesComponent } from './upload-images.component';
+import { UploadImagesService } from './services/upload-images.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('UploadImagesComponent', () => {
   let component: UploadImagesComponent;
@@ -8,7 +10,9 @@ describe('UploadImagesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploadImagesComponent ]
+      declarations: [ UploadImagesComponent ],
+      providers:[{provide:UploadImagesService, useValue:{}}],
+      schemas:[CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
 
