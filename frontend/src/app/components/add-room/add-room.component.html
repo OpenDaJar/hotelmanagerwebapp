@@ -1,8 +1,7 @@
 <div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
   <form
     [formGroup]="addRoomForm"
-    #formDirective="ngForm"
-    (ngSubmit)="onSubmit(formDirective)"
+    (ngSubmit)="onSubmit()"
   >
     <h1 class="text-center">Add Room</h1>
     <!-- Room Number -->
@@ -121,7 +120,7 @@
     ></app-upload-images>
     <!-- Submit Button -->
     <div class="text-center">
-      <button [disabled]="addRoomForm.invalid" mat-button color="primary">
+      <button [disabled]="addRoomForm.invalid" type="submit" mat-button color="primary">
         Add Room
       </button>
     </div>

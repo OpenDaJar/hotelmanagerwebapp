@@ -21,17 +21,21 @@ export class AddRoomComponent implements OnInit {
   roomAdded = false;
   roomAddedFailed = false;
   imgURL = '';
+  compWindow: any;
 
   constructor(
     private fb: FormBuilder,
     private addRoomService: AddRoomService
-  ) {}
+  ) {
+    this.compWindow = window;
+
+  }
 
   ngOnInit(): void {
     this.createForm();
   }
 
-  onSubmit(formDirective: FormGroupDirective): void {
+  onSubmit(): void {
     console.log(this.addRoomForm.value);
     this.room = {
       number: this.addRoomForm.get('number')?.value,
@@ -85,7 +89,7 @@ export class AddRoomComponent implements OnInit {
   }
 
   reloadPage(): void {
-    window.location.reload();
+    this.compWindow.location.reload();
   }
 
   getImageURL(imgURLEvent: string) {

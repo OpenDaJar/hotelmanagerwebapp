@@ -4,6 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/_services/auth.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -13,6 +14,8 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [HttpClientTestingModule,ReactiveFormsModule],
+      // imports: [ReactiveFormsModule],
+      providers:[AuthService],
       schemas:[CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 

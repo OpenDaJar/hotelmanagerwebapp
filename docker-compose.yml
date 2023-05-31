@@ -28,6 +28,10 @@ services:
       - DB_PORT=$MYSQLDB_DOCKER_PORT
     stdin_open: true
     tty: true
+    volumes:
+      - storage:/var/lib/docker/volumes/app-storage
+
 
 volumes: 
   db:
+  storage:

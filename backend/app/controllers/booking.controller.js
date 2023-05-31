@@ -6,12 +6,23 @@ const Booking = db.booking;
 
 exports.createBooking = async (req, res) => {
   try {
+    if (!req.body.roomId)
+      return res.status(400).send({ message: "No room ID in Booking" });
     const room = await Room.findByPk(req.body.roomId);
     if (!room)
       return res.status(404).send({
         message: `Room with ID: ${req.body.roomId} not found.`,
       });
-
+    if (!req.body.clientName)
+      return res.status(400).send({ message: "No client name in Booking" });
+    if (!req.body.checkin)
+      return res.status(400).send({ message: "No checkin in Booking" });
+    if (!req.body.checkout)
+      return res.status(400).send({ message: "No checkout in Booking" });
+    if (!req.body.price)
+      return res.status(400).send({ message: "No price in Booking" });
+    if (!req.body.notes)
+      return res.status(400).send({ message: "No notes in Booking" });
     const booking = await Booking.create({
       clientName: req.body.clientName,
       checkin: req.body.checkin,
@@ -56,7 +67,9 @@ exports.findBooking = async (req, res) => {
     const booking = await Booking.findByPk(id);
     console.log(booking);
     if (!booking)
-      return res.status(404).send({ message: `Booking with ID ${id} not found.` });
+      return res
+        .status(404)
+        .send({ message: `Booking with ID ${id} not found.` });
     res.status(200).send(booking);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -94,7 +107,8 @@ exports.findBookings = async (req, res) => {
 exports.findAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.findAll();
-    if (!bookings) return res.status(404).send({message:"No bookings found"});
+    if (!bookings)
+      return res.status(404).send({ message: "No bookings found" });
     res.status(200).send(bookings);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -109,7 +123,9 @@ exports.updateBooking = async (req, res) => {
       where: { id: id },
     });
     if (!booking)
-      return res.status(404).send({ message: `Booking with ID:${id} cannot update` });
+      return res
+        .status(404)
+        .send({ message: `Booking with ID:${id} cannot update` });
     res.status(200).send("Room updated successfully!");
   } catch (error) {
     res.status(500).send({ message: error.message });

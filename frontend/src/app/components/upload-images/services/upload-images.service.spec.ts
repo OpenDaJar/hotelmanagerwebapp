@@ -24,16 +24,18 @@ describe('UploadImagesService', () => {
   });
 
 
-  // it('should upload image API',()=>{
-  //   let testFile!:File
-  //   const testMsg = {message: `Uploaded the file successfully:`}
+  it('should upload image API',()=>{
+    let testFile!:File
+    const testMsg = {message: `Uploaded the file successfully:`}
 
-  //   service.upload(testFile).subscribe(()=>{})
-  //   const req = httpTestingController.expectOne(
-  //     API_URL + '/upload'
-  //   );
-  //   expect(req.request.method).toEqual('POST');
-  //   req.flush(testMsg);
-  //   httpTestingController.verify();
-  // })
+    service.upload(testFile).subscribe((data)=>{
+      expect(data).toBeTruthy()
+    })
+    const req = httpTestingController.expectOne(
+      API_URL + '/upload'
+    );
+    expect(req.request.method).toEqual('POST');
+    req.flush(testMsg);
+    httpTestingController.verify();
+  })
 });
