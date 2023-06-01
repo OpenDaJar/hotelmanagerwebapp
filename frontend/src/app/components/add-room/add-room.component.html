@@ -1,7 +1,8 @@
 <div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
   <form
     [formGroup]="addRoomForm"
-    (ngSubmit)="onSubmit()"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit(formDirective)"
   >
     <h1 class="text-center">Add Room</h1>
     <!-- Room Number -->
@@ -114,14 +115,26 @@
       </mat-error>
     </mat-form-field>
     <!-- Upload image -->
-    <app-upload-images
-      (picURLEvent)="getImageURL($event)"
-      [roomName]="addRoomForm.get('number')?.value"
-    ></app-upload-images>
+
+    <div *ngIf="!imageReset">
+      <app-upload-images
+        (picURLEvent)="getImageURL($event)"
+        [roomName]="addRoomForm.get('number')?.value"
+      ></app-upload-images>
+    </div>
+
     <!-- Submit Button -->
     <div class="text-center">
-      <button [disabled]="addRoomForm.invalid" type="submit" mat-button color="primary">
+      <button
+        [disabled]="addRoomForm.invalid"
+        type="submit"
+        mat-button
+        color="primary"
+      >
         Add Room
+      </button>
+      <button (click)="resetForm(formDirective)" type="button" mat-button color="primary">
+        Reset
       </button>
     </div>
     <div *ngIf="roomAddedFailed" class="alert alert-danger" role="alert">
