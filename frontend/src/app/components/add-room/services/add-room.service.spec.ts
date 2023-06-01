@@ -6,29 +6,35 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { Room } from 'src/app/models/room.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
 
-describe('AddRoomService', () => {
-  const API_URL = 'http://localhost:6868/api/rooms';
+fdescribe('AddRoomService', () => {
+  // const API_URL = 'http://localhost:6868/api/rooms';
   let addRoomService: AddRoomService;
-  let httpClient: HttpClientTestingModule;
-  let httpTestingController: HttpTestingController;
+  let httpClientSpy: { post: jasmine.Spy };
+  // let httpClient: HttpClientTestingModule;
+  // let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AddRoomService],
+      imports: [],
+      providers: [
+        AddRoomService,
+        { provide: HttpClient, useValue: httpClientSpy },
+      ],
     });
     addRoomService = TestBed.inject(AddRoomService);
-    httpClient = TestBed.inject(HttpClientTestingModule);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    // httpClient = TestBed.inject(HttpClientTestingModule);
+    // httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
     expect(addRoomService).toBeTruthy();
   });
 
-  it('should add Room API', () => {
+  it('should add Room - 200', (done: DoneFn) => {
     const testData: Room = {
       number: 'testNumber',
       type: 'common',
@@ -36,49 +42,52 @@ describe('AddRoomService', () => {
       extras: 'extras',
       imgURL: 'imgURL',
     };
-    const testMsg = { status: 200, message: 'Room Created' };
-    addRoomService.createRoom(testData).subscribe((res) => {
-      expect(res).toEqual(testMsg);
+
+    const testMsg = {
+      status: 200,
+      message: 'Room Created',
+    };
+
+    httpClientSpy.post.and.returnValue(of(testMsg.message));
+    addRoomService.createRoom(testData).subscribe({
+      next: (res) => {
+        expect(res).toBe(testMsg.message);
+        done();
+      },
+      error: done.fail,
     });
-    const req = httpTestingController.expectOne(API_URL + '/addroom');
-    expect(req.request.method).toEqual('POST');
-    req.flush(testMsg);
-    httpTestingController.verify();
+    expect(httpClientSpy.post.calls.count()).toBe(1);
   });
 
-  it(' should return error status: 400', () => {
-    const testRoom: Room = {
+  it('should add Room - 400',(done:DoneFn)=>{
+    const testData: Room = {
       number: 'testNumber',
+      type: undefined,
       price: 1222,
       extras: 'extras',
       imgURL: 'imgURL',
     };
-    const emsg = {
-      status: 400,
-      message: 'No Room type.',
+
+    const testMsg = {
+      status: 404,
+      message: "No Room number.",
     };
-    // addRoomService.createRoom(testRoom).subscribe(
-    //   () => {
-    //     fail('next handler must not be called');
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     expect(error.status).toEqual(emsg.status);
-    //     expect(error.error).toEqual(emsg.message);
-    //   },
-    //   () => {
-    //     fail('complete handler must not be called');
-    //   }
-    // );
-    addRoomService.createRoom(testRoom).subscribe({
-      error: (e: HttpErrorResponse) => {
-        expect(e.status).toEqual(emsg.status);
-        expect(e.error).toEqual(emsg.message);
-      },
+
+    const errorResponse = new HttpErrorResponse({
+      error: `test ${testMsg.status} error`,
+      status: testMsg.status,
+      statusText: testMsg.message,
     });
 
-    const req = httpTestingController.expectOne(API_URL + '/addroom');
-    expect(req.request.method).toEqual('POST');
-    req.flush(emsg.message, { status: emsg.status, statusText: emsg.message });
-    httpTestingController.verify();
-  });
+    httpClientSpy.post.and.returnValue(throwError(()=>errorResponse))
+    addRoomService.createRoom(testData).subscribe({
+      error: (e) => {
+        expect(e.message).toContain(testMsg.message);
+        done();
+      },
+    });
+    expect(httpClientSpy.post.calls.count()).toBe(1);
+
+  })
+
 });

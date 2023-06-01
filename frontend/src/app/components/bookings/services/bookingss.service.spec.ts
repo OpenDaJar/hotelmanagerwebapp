@@ -151,8 +151,7 @@ describe('BookingssService', () => {
     httpClientSpy.delete.and.returnValue(of(testMsg.message));
     bookingService.deleteBooking(id).subscribe({
       next: (res) => {
-        expect(res.status).toBe(testMsg.status);
-        expect(res.message).toBe(testMsg.message);
+        expect(res).toBe(testMsg.message);
         done();
       },
       error: done.fail,

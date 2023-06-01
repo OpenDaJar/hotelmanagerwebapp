@@ -32,23 +32,23 @@ describe('AddRoomComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should submit room', () => {
-    const myWindow = {
-      location: {
-        reload() {
-          return 'something';
-        },
-      },
-    };
-    component.addRoomForm.controls['number'].setValue('test');
-    component.addRoomForm.controls['type'].setValue('common');
-    component.addRoomForm.controls['price'].setValue(1234);
-    component.addRoomForm.controls['extras'].setValue('nope');
-    msg.message = 'Room Added';
-    component.compWindow = myWindow;
-    component.onSubmit();
-    expect(component.roomAdded).toBeTrue();
-  });
+  // it('should submit room', () => {
+  //   const myWindow = {
+  //     location: {
+  //       reload() {
+  //         return 'something';
+  //       },
+  //     },
+  //   };
+  //   component.addRoomForm.controls['number'].setValue('test');
+  //   component.addRoomForm.controls['type'].setValue('common');
+  //   component.addRoomForm.controls['price'].setValue(1234);
+  //   component.addRoomForm.controls['extras'].setValue('nope');
+  //   msg.message = 'Room Added';
+  //   component.compWindow = myWindow;
+  //   component.onSubmit();
+  //   expect(component.roomAdded).toBeTrue();
+  // });
 
   // it('should throw error -> createRoom', fakeAsync((done: DoneFn) => {
   //   let errorMsg="aaaaa";

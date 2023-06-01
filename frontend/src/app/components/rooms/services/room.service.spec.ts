@@ -1,16 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RoomService } from './room.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
 import { Room } from '../../../models/room.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
-fdescribe('RoomService', () => {
-  // const API_URL = 'http://localhost:6868/api/rooms';
+describe('RoomService', () => {
   let roomService: RoomService;
   let httpClientSpy: {
     post: jasmine.Spy;
@@ -18,8 +13,6 @@ fdescribe('RoomService', () => {
     put: jasmine.Spy;
     delete: jasmine.Spy;
   };
-  // let httpClient: HttpClientTestingModule;
-  // let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', [
@@ -36,8 +29,6 @@ fdescribe('RoomService', () => {
       ],
     });
     roomService = TestBed.inject(RoomService);
-    // httpClient = TestBed.inject(HttpClientTestingModule);
-    // httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
@@ -102,14 +93,185 @@ fdescribe('RoomService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(1);
   });
 
-  // it('should get Room API - 200', (done: DoneFn) => {});
-  // it('should get Room API - 404 no room found', (done: DoneFn) => {});
+  it('should get Room API - 200', (done: DoneFn) => {
+    const id = 1;
+    const testRoom: Room = {
+      id: 1,
+      number: 'testNumber1',
+      type: 'common',
+      price: 111,
+      extras: 'extras1',
+      imgURL: 'imgURL1',
+    };
+    const testMsg = {
+      status: 200,
+      message: testRoom,
+    };
+    httpClientSpy.get.and.returnValue(of(testMsg.message));
+    roomService.getRoom(id).subscribe({
+      next: (res) => {
+        expect(res).toBe(testMsg.message);
+        done();
+      },
+      error: done.fail,
+    });
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+  });
 
-  // it('should update Room API - 200', (done: DoneFn) => {});
-  // it('should update Room API - 404 no room found', (done: DoneFn) => {});
-  // it('should delete Room API - 200', (done: DoneFn) => {});
-  // it('should delete Room API - 404 no room found', (done: DoneFn) => {});
+  it('should get Room API - 404 no room found', (done: DoneFn) => {
+    const id = 1;
+    const testMsg = {
+      status: 404,
+      message: `Could not find room with ID:${id}`,
+    };
 
-  // it('should get Room by type API - 200', (done: DoneFn) => {});
-  // it('should get Room by type API - 404 no rooms for type', (done: DoneFn) => {});
+    const errorResponse = new HttpErrorResponse({
+      error: `test ${testMsg.status} error`,
+      status: testMsg.status,
+      statusText: testMsg.message,
+    });
+    httpClientSpy.get.and.returnValue(throwError(() => errorResponse));
+    roomService.getRoom(id).subscribe({
+      error: (e) => {
+        expect(e.message).toContain(testMsg.message);
+        done();
+      },
+    });
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+  });
+
+  it('should update Room API - 200', (done: DoneFn) => {
+    const id = 1;
+    const testRoom: Room = {
+      number: 'testNumber1',
+      type: 'common',
+    };
+    const testMsg = {
+      status: 200,
+      message: `Room with id=${id} was updated successfully.`,
+    };
+    httpClientSpy.put.and.returnValue(of(testMsg.message));
+    roomService.updateRoom(id, testRoom).subscribe({
+      next: (res) => {
+        expect(res).toBe(testMsg.message);
+        done();
+      },
+      error: done.fail,
+    });
+    expect(httpClientSpy.put.calls.count()).toBe(1);
+  });
+
+  it('should update Room API - 404 no room found', (done: DoneFn) => {
+    const id = 1;
+    const testRoom: Room = {
+      number: 'testNumber1',
+      type: 'common',
+    };
+
+    const testMsg = { status: 404, message: `Room with id=${id} not found.` };
+
+    const errorResponse = new HttpErrorResponse({
+      error: `test ${testMsg.status} error`,
+      status: testMsg.status,
+      statusText: testMsg.message,
+    });
+
+    httpClientSpy.put.and.returnValue(throwError(() => errorResponse));
+    roomService.updateRoom(id, testRoom).subscribe({
+      error: (e) => {
+        expect(e.message).toContain(testMsg.message);
+        done();
+      },
+    });
+    expect(httpClientSpy.put.calls.count()).toBe(1);
+  });
+
+  it('should delete Room API - 200', (done: DoneFn) => {
+    const id = 1;
+    const testMsg = {
+      status: 200,
+      message: `Room with id=${id} was deleted successfully.`,
+    };
+    httpClientSpy.delete.and.returnValue(of(testMsg.message));
+    roomService.deleteRoom(id).subscribe({
+      next: (res) => {
+        expect(res).toBe(testMsg.message);
+        done();
+      },
+      error: done.fail,
+    });
+
+    expect(httpClientSpy.delete.calls.count()).toBe(1);
+  });
+
+  it('should delete Room API - 404 no room found', (done: DoneFn) => {
+    const id = 1;
+    const testMsg = {
+      status: 404,
+      message: `Room with id=${id} not found.`,
+    };
+
+    const errorResponse = new HttpErrorResponse({
+      error: `test ${testMsg.status} error`,
+      status: testMsg.status,
+      statusText: testMsg.message,
+    });
+    httpClientSpy.delete.and.returnValue(throwError(() => errorResponse));
+    roomService.deleteRoom(id).subscribe({
+      error: (e) => {
+        expect(e.message).toContain(testMsg.message);
+        done();
+      },
+    });
+    expect(httpClientSpy.delete.calls.count()).toBe(1);
+  });
+
+  it('should get Room by type API - 200', (done: DoneFn) => {
+    const type = 'common';
+    const testRooms: Room[] = [
+      {
+        id: 1,
+        number: 'testNumber1',
+        type: 'common',
+        price: 111,
+        extras: 'extras1',
+        imgURL: 'imgURL1',
+      },
+    ];
+    const testMsg = {
+      status: 200,
+      message: testRooms,
+    };
+    httpClientSpy.get.and.returnValue(of(testMsg.message));
+    roomService.getRoomByType(type).subscribe({
+      next: (res) => {
+        expect(res).toBe(testMsg.message);
+        done();
+      },
+      error: done.fail,
+    });
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+  });
+
+  it('should get Room by type API - 404 no rooms for type', (done: DoneFn) => {
+    const type = 'common';
+    const testMsg = {
+      status: 404,
+      message: `No ${type} rooms.`,
+    };
+
+    const errorResponse = new HttpErrorResponse({
+      error: `test ${testMsg.status} error`,
+      status: testMsg.status,
+      statusText: testMsg.message,
+    });
+    httpClientSpy.get.and.returnValue(throwError(() => errorResponse));
+    roomService.getRoomByType(type).subscribe({
+      error: (e) => {
+        expect(e.message).toContain(testMsg.message);
+        done();
+      },
+    });
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+  });
 });
