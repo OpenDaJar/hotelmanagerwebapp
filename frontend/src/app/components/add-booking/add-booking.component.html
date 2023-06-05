@@ -1,8 +1,8 @@
 <div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
   <form
+    data-testid="submit-form"
     [formGroup]="addBookingForm"
-    #formDirective="ngForm"
-    (ngSubmit)="onSubmit(formDirective)"
+    (ngSubmit)="onSubmit()"
   >
     <h1 class="text-center">Add Booking</h1>
     <!-- Client Name -->
@@ -84,6 +84,7 @@
           mat-button
           color="primary"
           type="button"
+          data-testid="cancel-selection-btn"
           (click)="cancelSelection()"
         >
           Cancel Selection
@@ -136,6 +137,7 @@
           type="button"
           mat-button
           class="btn-primary"
+          data-testid="calculate-booking-btn"
           (click)="bookingPriceCalc()"
         >
           Calculate Price
@@ -155,14 +157,27 @@
         >Field is Required</mat-error
       >
     </mat-form-field>
-    <!-- Submit Button -->
+    <!-- Submit/Reset Button -->
     <div>
-      <button [disabled]="addBookingForm.invalid" mat-button color="primary">
+      <button
+        data-testid="submit-btn"
+        [disabled]="addBookingForm.invalid"
+        mat-button
+        type="submit"
+        color="primary"
+      >
         Book Room
       </button>
+      <button mat-button type="reset" data-testid="rest-btn" color="primary" (click)="resetForm()">
+        Reset Form
+      </button>
+    </div>
+    <div *ngIf="bookingAdded" class="alert alert-success" role="alert">
+      Booking Added
     </div>
     <div *ngIf="bookingAddedFailed" class="alert alert-danger" role="alert">
-      Adding Room failed: {{ errorMeesage }}
+      Adding Booking failed: {{ errorMeesage }}
     </div>
+
   </form>
 </div>

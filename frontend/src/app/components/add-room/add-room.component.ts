@@ -24,14 +24,17 @@ export class AddRoomComponent implements OnInit {
   compWindow: any;
   imageReset = false;
 
-  constructor(private fb: FormBuilder, private addRoomService: AddRoomService) {
-  }
+
+  constructor(
+    private fb: FormBuilder,
+    private addRoomService: AddRoomService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
   }
 
-  onSubmit(formDirective:FormGroupDirective): void {
+  onSubmit(): void {
     console.log(this.addRoomForm.value);
     this.room = {
       number: this.addRoomForm.get('number')?.value,
@@ -44,12 +47,7 @@ export class AddRoomComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.roomAdded = true;
-      },
-      complete: () => {
-        //reset form and errors
-        // console.log('Room Added');
-        this.resetForm(formDirective)
-        // this.addRoomForm.reset();;
+        this.resetForm()
       },
       error: (e) => {
         console.error(e);
@@ -79,13 +77,19 @@ export class AddRoomComponent implements OnInit {
     });
   }
 
-  resetForm(formDirective:FormGroupDirective): void {
-    formDirective.resetForm();
-    this.addRoomForm.reset();
+  resetForm(): void {
+    console.log('reset form');
+    this.addRoomForm.reset()
+    this.addRoomForm.controls['number'].setErrors(null)
+    this.addRoomForm.controls['type'].setErrors(null)
+    this.addRoomForm.controls['price'].setErrors(null)
+    this.addRoomForm.controls['extras'].setErrors(null)
     this.imageReset = !this.imageReset;
     setTimeout(() => {
       this.imageReset = !this.imageReset;
     }, 10);
+    this.roomAddedFailed=false
+    this.roomAdded = false
   }
 
   clearValue(key: string): void {

@@ -1,8 +1,9 @@
 <div class="h-100 d-flex align-items-center justify-content-center mt-auto p-5">
   <form
     [formGroup]="addRoomForm"
+    data-testid="submit-form"
     #formDirective="ngForm"
-    (ngSubmit)="onSubmit(formDirective)"
+    (ngSubmit)="onSubmit()"
   >
     <h1 class="text-center">Add Room</h1>
     <!-- Room Number -->
@@ -14,12 +15,12 @@
         formControlName="number"
         placeholder="Enter Room Number"
       />
-      <!-- Clear btn -->
+      <!-- Clear field btn -->
       <button
         tabindex="-1"
         *ngIf="
           addRoomForm.controls['number'].value != '' &&
-          addRoomForm.controls['extras'].value != null
+          addRoomForm.controls['number'].value != null
         "
         (click)="clearValue('number')"
         matSuffix
@@ -65,12 +66,12 @@
         formControlName="price"
         placeholder="Enter Room Price"
       />
-      <!-- Clear btn -->
+      <!-- Clear field btn -->
       <button
         tabindex="-1"
         *ngIf="
           addRoomForm.controls['price'].value != '' &&
-          addRoomForm.controls['extras'].value != null
+          addRoomForm.controls['price'].value != null
         "
         (click)="clearValue('price')"
         matSuffix
@@ -94,7 +95,7 @@
         formControlName="extras"
         placeholder="Enter Room Extras"
       />
-      <!-- Clear btn -->
+      <!-- Clear field btn -->
       <button
         tabindex="-1"
         *ngIf="
@@ -133,7 +134,7 @@
       >
         Add Room
       </button>
-      <button (click)="resetForm(formDirective)" type="button" mat-button color="primary">
+      <button id="reset-btn" (click)="resetForm()" type="reset" mat-button color="primary">
         Reset
       </button>
     </div>

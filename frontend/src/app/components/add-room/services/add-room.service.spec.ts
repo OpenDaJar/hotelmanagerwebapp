@@ -9,7 +9,7 @@ import { Room } from 'src/app/models/room.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
-fdescribe('AddRoomService', () => {
+describe('AddRoomService', () => {
   // const API_URL = 'http://localhost:6868/api/rooms';
   let addRoomService: AddRoomService;
   let httpClientSpy: { post: jasmine.Spy };
@@ -70,7 +70,7 @@ fdescribe('AddRoomService', () => {
 
     const testMsg = {
       status: 404,
-      message: "No Room number.",
+      message: "No Room type.",
     };
 
     const errorResponse = new HttpErrorResponse({

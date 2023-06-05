@@ -30,6 +30,7 @@ export class AddBookingComponent implements OnInit {
   displaySelected = false;
   tableCols?: string[] = ['number', 'price', 'extras'];
   bookingPrice = 0;
+  formDir!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -85,17 +86,19 @@ export class AddBookingComponent implements OnInit {
   }
 
   //submit data and refresh page when done
-  onSubmit(formDirective: FormGroupDirective): void {
+  onSubmit(): void {
     this.bookingPriceCalc();
 
-    const checkin = this.addBookingForm
-      .get('checkin')
-      ?.value.toDate()
-      .toLocaleDateString();
-    const checkout = this.addBookingForm
-      .get('checkout')
-      ?.value.toDate()
-      .toLocaleDateString();
+    // const checkin = this.addBookingForm
+    //   .get('checkin')
+    //   ?.value.toDate()
+    //   .toLocaleDateString();
+    // const checkout = this.addBookingForm
+    //   .get('checkout')
+    //   ?.value.toDate()
+    //   .toLocaleDateString();
+    const checkin = this.addBookingForm.get('checkin')?.value;
+    const checkout = this.addBookingForm.get('checkout')?.value;
     this.booking = {
       clientName: this.addBookingForm.get('clientName')?.value,
       checkin: checkin,
@@ -110,27 +113,33 @@ export class AddBookingComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.bookingAdded = true;
+        this.resetForm()
       },
-      complete: () => {
-        formDirective.resetForm();
-        this.addBookingForm.reset();
-        this.displayRooms = false;
-        this.displaySelected = false;
-        this.bookingPrice = 0;
+      // complete: () => {
+        // formDirective.resetForm();
+        // this.addBookingForm.reset();
+        // this.createForm()
+        // this.addBookingForm.markAsPristine()
+        // this.addBookingForm.markAsUntouched()
+        // this.resetForm()
+        // this.displayRooms = false;
+        // this.displaySelected = false;
+        // this.bookingPrice = 0;
         // this.refreshPage();
-      },
+      // },
       error: (e) => {
         console.log(e);
         this.errorMeesage = e.error.message;
         this.bookingAddedFailed = true;
       },
     });
+
   }
 
   //refresh page
-  refreshPage(): void {
-    console.log('refreshing page');
-  }
+  // refreshPage(): void {
+  //   console.log('refreshing page');
+  // }
 
   //clicked row and disable roomTypes selection
   clickedRow(row: Room): void {
@@ -156,21 +165,41 @@ export class AddBookingComponent implements OnInit {
       this.addBookingForm.get('checkin')?.value
     ) {
       let roomRate = this.selectedRoom?.price;
-      if (roomRate == undefined) roomRate = 0;
 
+      // if (roomRate == undefined) roomRate = 0;
+
+      // const checkinDays = this.addBookingForm.get('checkin')?.value.toDate();
+      // const checkoutDays = this.addBookingForm.get('checkout')?.value.toDate();
+      const checkinDays = new Date(this.addBookingForm.get('checkin')?.value);
+      const checkoutDays = new Date(this.addBookingForm.get('checkout')?.value);
       let days =
-        (this.addBookingForm.get('checkout')?.value.toDate() -
-          this.addBookingForm.get('checkin')?.value.toDate()) /
+        (checkoutDays.getTime() - checkinDays.getTime()) /
         (24 * 60 * 60 * 1000);
-      if (days == undefined) days = 0;
-
+      // if (days == undefined) days = 0;
       let price = 0;
       if (roomRate != undefined) {
         price = roomRate * days;
       }
 
-      console.log(`Room Rate: ${roomRate}, Days: ${days}, total:${price}`);
+      // console.log(`Room Rate: ${roomRate}, Days: ${days}, total:${price}`);
       this.bookingPrice = price;
     }
+  }
+  resetForm(): void {
+    console.log('reset form');
+    this.cancelSelection();
+    this.addBookingForm.reset();
+    this.addBookingForm.controls['clientName'].setErrors(null)
+    this.addBookingForm.controls['checkin'].setErrors(null)
+    this.addBookingForm.controls['checkout'].setErrors(null)
+    this.addBookingForm.controls['notes'].setErrors(null)
+    // this.addBookingForm.controls['roomType'].setErrors(null)
+    // this.addBookingForm.controls['roomId'].setErrors(null)
+    this.cancelSelection()
+    this.displayRooms = false;
+    this.displaySelected = false;
+    this.bookingPrice = 0;
+    this.bookingAdded = false;
+    this.bookingAddedFailed = false;
   }
 }
