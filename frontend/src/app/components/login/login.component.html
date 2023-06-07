@@ -2,7 +2,11 @@
   *ngIf="!isLoggedIn"
   class="h-100 d-flex align-items-center justify-content-center mt-auto p-5"
 >
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="loginForm"
+    data-testid="submit-form"
+    (ngSubmit)="onSubmit()"
+  >
     <h1 class="text-center">Login</h1>
     <!-- Username -->
     <mat-form-field class="form-field">

@@ -9,7 +9,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BookRoom } from 'src/app/models/book-room.model';
 import { Room } from 'src/app/models/room.model';
 import { BookingssService } from './services/bookingss.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogRef } from '@angular/material/dialog';
 import { BookingDeleteComponent } from './booking-delete/booking-delete.component';
 
 @Component({
@@ -27,7 +27,7 @@ import { BookingDeleteComponent } from './booking-delete/booking-delete.componen
     ]),
   ],
 })
-export class BookingsComponent implements OnInit, AfterViewInit {
+export class BookingsComponent implements OnInit, AfterViewInit{
   bookings: BookRoom[] = [];
   rooms: Room[] = [];
   room: Room = {};
@@ -46,23 +46,28 @@ export class BookingsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private bookingService: BookingssService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
+  ngAfterViewInit(): void {
+    // this.retrieveAllBookings();
+  }
 
   ngOnInit(): void {
     this.retrieveAllBookings();
   }
-  ngAfterViewInit(): void {}
-  fillArray(): void {
-    this.bookings.forEach((booking) => {
-      const room = this.rooms.find((room) => room.id == booking.roomId);
-      if (room != undefined)
-        this.testArray.push({
-          id: booking.id,
-          roomNum: room.number,
-        });
-    });
-  }
+
+  // fillArray(): void {
+  //   this.bookings.forEach((booking) => {
+  //     const room = this.rooms.find((room) => room.id == booking.roomId);
+  //     if (room != undefined)
+  //       this.testArray.push({
+  //         id: booking.id,
+  //         roomNum: room.number,
+  //       });
+  //   });
+  // }
+
+
   retrieveAllBookings(): void {
     this.bookingService.getAllBookings().subscribe({
       next: (data) => {
@@ -103,18 +108,27 @@ export class BookingsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  test(id: any) {
-    console.log('test', id);
-    this.getRoom(id.roomId);
-  }
+  // test(id: any) {
+  //   console.log('test', id);
+  //   this.getRoom(id.roomId);
+  // }
 
   clickedRemove(id: number): void {
     console.log('Clicked Remove booking with ID:', id);
-    this.dialog.open(BookingDeleteComponent, {
+    //Check either for unit testing
+    // this.dialog.open(BookingDeleteComponent, {
+    //   data: id,
+    // });
+
+    // this.dialog.afterAllClosed.subscribe(() => {
+    //   this.retrieveAllBookings();
+    // });
+    const dialogRef = this.dialog.open(BookingDeleteComponent, {
       data: id,
     });
-    this.dialog.afterAllClosed.subscribe(() => {
+
+    dialogRef.afterClosed().subscribe(()=>{
       this.retrieveAllBookings();
-    });
+    })
   }
 }

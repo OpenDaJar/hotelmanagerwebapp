@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddRoomComponent } from './add-room.component';
 import { AddRoomService } from './services/add-room.service';
@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 import { Room } from 'src/app/models/room.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
-fdescribe('AddRoomComponent', () => {
+describe('AddRoomComponent', () => {
   let component: AddRoomComponent;
   let fixture: ComponentFixture<AddRoomComponent>;
   let debugElement: DebugElement;

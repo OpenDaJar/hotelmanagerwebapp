@@ -20,8 +20,6 @@ export class BookingDeleteComponent {
       next: (res) => {
         console.log(res);
         this.message = res.message
-          ? res.message
-          : 'This Booking was deleted successfully!';
       },
       error: (e) => console.error(e),
     });
